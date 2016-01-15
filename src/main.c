@@ -45,6 +45,8 @@ main (int argc, char *argv[])
   /* getopt() variables */
   int option, idx, err;
   gboolean new = TRUE;
+  gboolean rp_window = FALSE;
+  gboolean fp_window = FALSE;
 
   /*** Signal handler related code ***/
   /* new and old actions for sigaction() */
@@ -65,7 +67,7 @@ main (int argc, char *argv[])
 
   /* Process command line options */
   calc_data.num_jobs = 1;
-  while( (option = getopt(argc, argv, "i:j:hv") ) != -1 )
+  while( (option = getopt(argc, argv, "i:j:frhv") ) != -1 )
   {
     switch( option )
     {
@@ -82,6 +84,14 @@ main (int argc, char *argv[])
       case 'j': /* number of child processes = num of processors */
         calc_data.num_jobs = atoi( optarg );
         break;
+      
+      case 'f': /* start with frequency plot window open */
+        fp_window = TRUE;
+        break
+
+      case 'r': /* start with radiation pattern window open */
+        rp_window = TRUE;
+        break
 
       case 'h': /* print usage and exit */
         usage();
@@ -97,7 +107,7 @@ main (int argc, char *argv[])
 
     } /* end of switch( option ) */
 
-  } /* while( (option = getopt(argc, argv, "i:o:hv") ) != -1 ) */
+  } /* while( (option = getopt(argc, argv, "i:o:frhv") ) != -1 ) */
 
   /* Read input file path name if not supplied by -i option */
   if( (strlen(infile) == 0) &&

@@ -35,6 +35,8 @@ void usage(void)
   fprintf( stderr,
       _("Usage: xnec2c <input-file-name>\n"\
         "              [-i <input-file-name>]\n"\
+        "              [-r  start with radiation pattern window open]\n"\
+        "              [-f  start with frequency plot window open]\n"\
         "              [-j <number of processors in SMP machine>]\n"\
         "              [-h: print this usage information and exit]\n"\
         "              [-v: print xnec2c version number and exit]\n") );
