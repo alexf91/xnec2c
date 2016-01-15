@@ -86,11 +86,11 @@ main (int argc, char *argv[])
       
       case 'f': /* start with frequency plot window open */
         fp_window = TRUE;
-        break
+        break;
 
       case 'r': /* start with radiation pattern window open */
         rp_window = TRUE;
-        break
+        break;
 
       case 'h': /* print usage and exit */
         usage();
@@ -259,11 +259,23 @@ main (int argc, char *argv[])
   calc_data.zo = 50.0;
 
   /* Open input file if specified */
-  if( strlen(infile) > 0 )
+  if( strlen(infile) > 0 ) {
     g_idle_add( Open_Input_File, (gpointer)&new );
-  else
-    SetFlag( INPUT_PENDING );
 
+		if(rp_window) {
+			GtkWidget *found = lookup_widget(main_window, "main_rdpattern");
+			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(found), TRUE);
+		}
+
+		if(fp_window) {
+			GtkWidget *found = lookup_widget(main_window, "main_freqplots");
+			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(found), TRUE);
+		}
+	}
+  else {
+    SetFlag( INPUT_PENDING );
+	}
+	
   gtk_main ();
 
   return 0;
