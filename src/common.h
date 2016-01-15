@@ -21,8 +21,8 @@
  * Common header file for xnec2c
  */
 
-#ifndef	COMMON_H
-#define	COMMON_H	1
+#ifndef COMMON_H
+#define COMMON_H    1
 
 #include <complex.h>
 #include <stdio.h>
@@ -39,139 +39,139 @@
 #include <gtk/gtk.h>
 
 /* commonly used complex constants */
-#define	CPLX_00	(0.0+I*0.0)
-#define	CPLX_01	(0.0+I*1.0)
-#define	CPLX_10	(1.0+I*0.0)
-#define	CPLX_11	(1.0+I*1.0)
+#define CPLX_00 (0.0+I*0.0)
+#define CPLX_01 (0.0+I*1.0)
+#define CPLX_10 (1.0+I*0.0)
+#define CPLX_11 (1.0+I*1.0)
 
 /* common constants */
-#define PI		3.141592654
-#define	POT		1.570796327
-#define	TP		6.283185308
-#define	TA		1.745329252E-02
-#define	TD		57.29577951
-#define	ETA		376.73
-#define	CVEL	299.8
-#define	CONST1	(0.0+I*4.771341189)
-#define	CONST4	(0.0+I*188.365)
-#define	SMIN	1.0e-3
+#define PI      3.141592654
+#define POT     1.570796327
+#define TP      6.283185308
+#define TA      1.745329252E-02
+#define TD      57.29577951
+#define ETA     376.73
+#define CVEL    299.8
+#define CONST1  (0.0+I*4.771341189)
+#define CONST4  (0.0+I*188.365)
+#define SMIN    1.0e-3
 
 #define cmplx(r, i) ((r)+I*(i))
 
 /* Replaces the "10000" limit used to */
 /* identify segment/patch connections */
-#define	PCHCON  100000
+#define PCHCON  100000
 
 /* Max length of a line read from input file */
-#define	LINE_LEN	135
+#define LINE_LEN    135
 
 /* Size of char arrays (strings) for error messages etc */
-#define MESG_SIZE	128
+#define MESG_SIZE   128
 
 /* Type of projection parameters stuct */
-#define	STRUCTURE_DRAWINGAREA	1
-#define	RDPATTERN_DRAWINGAREA	2
+#define STRUCTURE_DRAWINGAREA   1
+#define RDPATTERN_DRAWINGAREA   2
 
 /* Some colors for settinn cairo context */
-#define	WHITE	1.0, 1.0, 1.0
-#define	RED		1.0, 0.0, 0.0
-#define	YELLOW	1.0, 1.0, 0.0
-#define	GREEN	0.0, 1.0, 0.0
-#define	CYAN	0.0, 1.0, 1.0
-#define	BLUE	0.0, 0.0, 1.0
-#define	MAGENTA	1.0, 0.0, 1.0
-#define	GREY	0.5, 0.5, 0.5
-#define	BLACK	0.0, 0.0, 0.0
+#define WHITE   1.0, 1.0, 1.0
+#define RED     1.0, 0.0, 0.0
+#define YELLOW  1.0, 1.0, 0.0
+#define GREEN   0.0, 1.0, 0.0
+#define CYAN    0.0, 1.0, 1.0
+#define BLUE    0.0, 0.0, 1.0
+#define MAGENTA 1.0, 0.0, 1.0
+#define GREY    0.5, 0.5, 0.5
+#define BLACK   0.0, 0.0, 0.0
 
 /* For read/write pipes */
-#define	READ	0
-#define	WRITE	1
+#define READ    0
+#define WRITE   1
 
 /* Response to error dialog box */
-#define ERR_OK		FALSE
-#define ERR_STOP	TRUE
+#define ERR_OK      FALSE
+#define ERR_STOP    TRUE
 
 /*** Flow control flags ***/
 /* Freq Loop Control flags */
-#define	FREQ_LOOP_RUNNING	0x0000000000000001ll
-#define	FREQ_LOOP_DONE		0x0000000000000002ll
-#define	FREQ_LOOP_INIT		0x0000000000000004ll
-#define	FREQ_LOOP_STOP		0x0000000000000008ll
-#define	FREQ_LOOP_FLAGS		0x000000000000000Fll
+#define FREQ_LOOP_RUNNING   0x0000000000000001ll
+#define FREQ_LOOP_DONE      0x0000000000000002ll
+#define FREQ_LOOP_INIT      0x0000000000000004ll
+#define FREQ_LOOP_STOP      0x0000000000000008ll
+#define FREQ_LOOP_FLAGS     0x000000000000000Fll
 
 /* Main Window Control flags */
-#define	DRAW_CURRENTS		0x0000000000000010ll
-#define	DRAW_CHARGES		0x0000000000000020ll
-#define	COMMON_PROJECTION	0x0000000000000040ll
-#define	COMMON_FREQUENCY	0x0000000000000080ll
-#define	MAIN_NEW_FREQ		0x0000000000000100ll
-#define	MAIN_QUIT			0x0000000000000200ll
+#define DRAW_CURRENTS       0x0000000000000010ll
+#define DRAW_CHARGES        0x0000000000000020ll
+#define COMMON_PROJECTION   0x0000000000000040ll
+#define COMMON_FREQUENCY    0x0000000000000080ll
+#define MAIN_NEW_FREQ       0x0000000000000100ll
+#define MAIN_QUIT           0x0000000000000200ll
 
 /* Freq Plot Control flags */
-#define	PLOT_ZREAL_ZIMAG	0x0000000000000400ll
-#define	PLOT_VSWR			0x0000000000000800ll
-#define	PLOT_ZMAG_ZPHASE	0x0000000000001000ll
-#define	PLOT_GMAX			0x0000000000002000ll
-#define	PLOT_GVIEWER		0x0000000000004000ll
-#define	PLOT_NETGAIN		0x0000000000008000ll
-#define	PLOT_GAIN_DIR		0x0000000000010000ll
-#define	PLOT_FREQ_LINE		0x0000000000020000ll
-#define	PLOT_SELECT			0x0000000000040000ll
-#define	PLOT_ENABLED		0x0000000000080000ll
-#define	PLOT_QUIT			0x0000000000100000ll
-#define	PLOT_FLAGS			0x00000000001FFC00ll
+#define PLOT_ZREAL_ZIMAG    0x0000000000000400ll
+#define PLOT_VSWR           0x0000000000000800ll
+#define PLOT_ZMAG_ZPHASE    0x0000000000001000ll
+#define PLOT_GMAX           0x0000000000002000ll
+#define PLOT_GVIEWER        0x0000000000004000ll
+#define PLOT_NETGAIN        0x0000000000008000ll
+#define PLOT_GAIN_DIR       0x0000000000010000ll
+#define PLOT_FREQ_LINE      0x0000000000020000ll
+#define PLOT_SELECT         0x0000000000040000ll
+#define PLOT_ENABLED        0x0000000000080000ll
+#define PLOT_QUIT           0x0000000000100000ll
+#define PLOT_FLAGS          0x00000000001FFC00ll
 
 /* Radiation Pattern Control flags */
-#define	DRAW_GAIN			0x0000000000200000ll
-#define	DRAW_EFIELD			0x0000000000400000ll
-#define	DRAW_HFIELD			0x0000000000800000ll
-#define	DRAW_EHFIELD		0x0000000001000000ll
-#define	DRAW_POYNTING		0x0000000002000000ll
-#define	DRAW_ENABLED		0x0000000004000000ll
-#define	DRAW_QUIT			0x0000000008000000ll
-#define	DRAW_NEW_RDPAT		0x0000000010000000ll
-#define	DRAW_NEW_EHFIELD	0x0000000020000000ll
-#define	OVERLAY_STRUCT		0x0000000040000000ll
-#define	NEAREH_SNAPSHOT		0x0000000080000000ll
-#define	NEAREH_ANIMATE		0x0000000100000000ll
-#define	ENABLE_RDPAT		0x0000000200000000ll
-#define	ENABLE_NEAREH		0x0000000400000000ll
-#define	DRAW_FLAGS			0x00000001FFE00000ll
-#define	RDPAT_FLAGS			0x0000000600000000ll
+#define DRAW_GAIN           0x0000000000200000ll
+#define DRAW_EFIELD         0x0000000000400000ll
+#define DRAW_HFIELD         0x0000000000800000ll
+#define DRAW_EHFIELD        0x0000000001000000ll
+#define DRAW_POYNTING       0x0000000002000000ll
+#define DRAW_ENABLED        0x0000000004000000ll
+#define DRAW_QUIT           0x0000000008000000ll
+#define DRAW_NEW_RDPAT      0x0000000010000000ll
+#define DRAW_NEW_EHFIELD    0x0000000020000000ll
+#define OVERLAY_STRUCT      0x0000000040000000ll
+#define NEAREH_SNAPSHOT     0x0000000080000000ll
+#define NEAREH_ANIMATE      0x0000000100000000ll
+#define ENABLE_RDPAT        0x0000000200000000ll
+#define ENABLE_NEAREH       0x0000000400000000ll
+#define DRAW_FLAGS          0x00000001FFE00000ll
+#define RDPAT_FLAGS         0x0000000600000000ll
 
 /* NEC2 editor flags */
-#define	NEC2_EDIT_SAVE		0x0000000800000000ll /* Save NEC2 editor data to a file */
-#define	NEC2_SAVE			0x0000001000000000ll /* Saving to a NEC2 input file */
+#define NEC2_EDIT_SAVE      0x0000000800000000ll /* Save NEC2 editor data to a file */
+#define NEC2_SAVE           0x0000001000000000ll /* Saving to a NEC2 input file */
 
 /* Structure/rad pattern/freq. plots image save */
-#define	IMAGE_SAVE			0x0000002000000000ll
+#define IMAGE_SAVE          0x0000002000000000ll
 
 /* Save gnuplot data */
-#define	RDPAT_GNUPLOT_SAVE	0x0000004000000000ll
-#define	PLOTS_GNUPLOT_SAVE	0x0000008000000000ll
-#define	STRCT_GNUPLOT_SAVE	0x0000010000000000ll
+#define RDPAT_GNUPLOT_SAVE  0x0000004000000000ll
+#define PLOTS_GNUPLOT_SAVE  0x0000008000000000ll
+#define STRCT_GNUPLOT_SAVE  0x0000010000000000ll
 
 /* All filechooser save flags */
-#define	ALL_SAVE_FLAGS		0x000001F000000000ll
+#define ALL_SAVE_FLAGS      0x000001F000000000ll
 
 /* Other flags */
-#define	ERROR_CONDX			0x0000020000000000ll
-#define	INPUT_PENDING		0x0000040000000000ll
-#define	ENABLE_EXCITN		0x0000080000000000ll
+#define ERROR_CONDX         0x0000020000000000ll
+#define INPUT_PENDING       0x0000040000000000ll
+#define ENABLE_EXCITN       0x0000080000000000ll
 
 /* Allocation control flags */
-#define	ALLOC_NEAREH_BUFF	0x0000100000000000ll
-#define	ALLOC_RDPAT_BUFF	0x0000200000000000ll
-#define	ALLOC_PNTING_BUFF	0x0000400000000000ll
+#define ALLOC_NEAREH_BUFF   0x0000100000000000ll
+#define ALLOC_RDPAT_BUFF    0x0000200000000000ll
+#define ALLOC_PNTING_BUFF   0x0000400000000000ll
 
-#define	ALL_FLAGS		    0xffffffffffffffffll
+#define ALL_FLAGS           0xffffffffffffffffll
 
 /* Type of near field data requested */
-#define NEAR_EFIELD		0x01
-#define NEAR_HFIELD		0x02
-#define NEAR_EHFIELD	0x03
+#define NEAR_EFIELD     0x01
+#define NEAR_HFIELD     0x02
+#define NEAR_EHFIELD    0x03
 
-#define CHILD	isChild()
+#define CHILD   isChild()
 
 /* Gain Scaling style */
 enum GAIN_SCALE
@@ -199,12 +199,12 @@ enum POL_TYPE
 typedef struct
 {
   double
-    *air,	/* Ai/lambda, real part */
-    *aii,	/* Ai/lambda, imaginary part */
-    *bir,	/* Bi/lambda, real part */
-    *bii,	/* Bi/lambda, imaginary part */
-    *cir,	/* Ci/lambda, real part */
-    *cii;	/* Ci/lambda, imaginary part */
+    *air,   /* Ai/lambda, real part */
+    *aii,   /* Ai/lambda, imaginary part */
+    *bir,   /* Bi/lambda, real part */
+    *bii,   /* Bi/lambda, imaginary part */
+    *cir,   /* Ci/lambda, real part */
+    *cii;   /* Ci/lambda, imaginary part */
 
   complex double *cur; /* Amplitude of basis function */
 
@@ -217,34 +217,34 @@ typedef struct
 typedef struct
 {
   int
-    n,		/* Number of wire segments */
-    np,		/* Number of wire segments in symmetry cell */
-    m,		/* Number of surface patches */
-    mp,		/* Number of surface patches in symmetry cell */
-    npm,	/* = n+m  */
-    np2m,	/* = n+2m */
-    np3m,	/* = n+3m */
-    ipsym,	/* Symmetry flag */
+    n,      /* Number of wire segments */
+    np,     /* Number of wire segments in symmetry cell */
+    m,      /* Number of surface patches */
+    mp,     /* Number of surface patches in symmetry cell */
+    npm,    /* = n+m  */
+    np2m,   /* = n+2m */
+    np3m,   /* = n+3m */
+    ipsym,  /* Symmetry flag */
     *icon1, /* Segments end 1 connection */
-    *icon2,	/* Segments end 2 connection */
-    *itag;	/* Segments tag number */
+    *icon2, /* Segments end 2 connection */
+    *itag;  /* Segments tag number */
 
   /* Wire segment data */
   double
-    *x1, *y1, *z1,	/* End 1 coordinates of wire segments */
-    *x2, *y2, *z2,	/* End 2 coordinates of wire segments */
-    *x, *y, *z,		/* Coordinates of segment centers */
-    *si, *bi,		/* Length and radius of segments  */
-    *cab,			/* cos(a)*cos(b) */
-    *sab, 	   		/* cos(a)*sin(b) */
-    *salp,	   		/* Z component - sin(a) */
+    *x1, *y1, *z1,  /* End 1 coordinates of wire segments */
+    *x2, *y2, *z2,  /* End 2 coordinates of wire segments */
+    *x, *y, *z,     /* Coordinates of segment centers */
+    *si, *bi,       /* Length and radius of segments  */
+    *cab,           /* cos(a)*cos(b) */
+    *sab,           /* cos(a)*sin(b) */
+    *salp,          /* Z component - sin(a) */
 
     /* Surface patch data */
-    *t1x, *t1y, *t1z,	/* Coordinates of t1 vector */
-    *t2x, *t2y, *t2z,	/* Coordinates of t2 vector */
-    *px, *py, *pz,		/* Coordinates of patch center */
-    *pbi,				/* Patch surface area */
-    *psalp,				/* Z component - sin(a) */
+    *t1x, *t1y, *t1z,   /* Coordinates of t1 vector */
+    *t2x, *t2y, *t2z,   /* Coordinates of t2 vector */
+    *px, *py, *pz,      /* Coordinates of patch center */
+    *pbi,               /* Patch surface area */
+    *psalp,             /* Z component - sin(a) */
 
     /* Wavelength in meters */
     wlam;
@@ -363,23 +363,23 @@ typedef struct
 typedef struct
 {
   int
-    ksymp,	/* Ground flag */
-    ifar,	/* Int flag in RP card, for far field calculations */
-    iperf,	/* Type of ground flag */
-    nradl;	/* Number of radials in ground screen */
+    ksymp,  /* Ground flag */
+    ifar,   /* Int flag in RP card, for far field calculations */
+    iperf,  /* Type of ground flag */
+    nradl;  /* Number of radials in ground screen */
 
   double
-    t2,		/* Const for radial wire ground impedance */
-    cl,		/* Distance in wavelengths of cliff edge from origin */
-    ch,		/* Cliff height in wavelengths */
-    scrwl,	/* Wire length in radial ground screen normalized to w/length */
-    scrwr;	/* Radius of wires in screen in wavelengths */
+    t2,     /* Const for radial wire ground impedance */
+    cl,     /* Distance in wavelengths of cliff edge from origin */
+    ch,     /* Cliff height in wavelengths */
+    scrwl,  /* Wire length in radial ground screen normalized to w/length */
+    scrwr;  /* Radius of wires in screen in wavelengths */
 
   complex double
-    zrati,	/* Ground medium [Er-js/wE0]^-1/2 */
-    zrati2,	/* As above for 2nd ground medium */
-    t1,		/* Const for radial wire ground impedance */
-    frati;	/* (k1^2-k2^2)/(k1^2+k2^2), k1=w(E0Mu0)^1/2, k1=k2/ZRATI */
+    zrati,  /* Ground medium [Er-js/wE0]^-1/2 */
+    zrati2, /* As above for 2nd ground medium */
+    t1,     /* Const for radial wire ground impedance */
+    frati;  /* (k1^2-k2^2)/(k1^2+k2^2), k1=w(E0Mu0)^1/2, k1=k2/ZRATI */
 
 } gnd_t;
 
@@ -387,16 +387,16 @@ typedef struct
 typedef struct
 {
   double
-	r1,	/* Distance from current element to point where field is evaluated  */
-	r2,	/* Distance from image of element to point where field is evaluated */
-	zmh, /* Z-Z', Z is height of field evaluation point */
-	zph; /* Z+Z', Z' is height of current element */
+    r1, /* Distance from current element to point where field is evaluated  */
+    r2, /* Distance from image of element to point where field is evaluated */
+    zmh, /* Z-Z', Z is height of field evaluation point */
+    zph; /* Z+Z', Z' is height of current element */
 
   complex double
-	u,	/* (Er-jS/WE0)^-1/2 */
-	u2,	/* u^2 */
-	xx1, /* G1*exp(jkR1*r[i])  */
-	xx2; /* G2*exp(jkR2*r'[i]) */
+    u,  /* (Er-jS/WE0)^-1/2 */
+    u2, /* u^2 */
+    xx1, /* G1*exp(jkR1*r[i])  */
+    xx2; /* G2*exp(jkR2*r'[i]) */
 
 } gwav_t;
 
@@ -419,10 +419,10 @@ typedef struct
 typedef struct
 {
   int
-    icase,	/* Storage mode of primary matrix */
-    npblk,	/* Num of blocks in first (NBLOKS-1) blocks */
-    nlast,	/* Num of blocks in last block */
-    imat;	/* Storage reserved in CM for primary NGF matrix A */
+    icase,  /* Storage mode of primary matrix */
+    npblk,  /* Num of blocks in first (NBLOKS-1) blocks */
+    nlast,  /* Num of blocks in last block */
+    imat;   /* Storage reserved in CM for primary NGF matrix A */
 
 } matpar_t;
 
@@ -430,26 +430,26 @@ typedef struct
 typedef struct
 {
   int
-    masym,	/* Matrix symmetry flags */
+    masym,  /* Matrix symmetry flags */
     neq,
     npeq,
     neq2,
-    nonet,	/* Number of two-port networks */
-    ntsol,	/* "Network equations are solved" flag */
-    nprint,	/* Print control flag */
-    *iseg1,	/* Num of seg to which port 1 of network is connected */
-    *iseg2,	/* Num of seg to which port 2 of network is connected */
-    *ntyp;	/* Type of networks */
+    nonet,  /* Number of two-port networks */
+    ntsol,  /* "Network equations are solved" flag */
+    nprint, /* Print control flag */
+    *iseg1, /* Num of seg to which port 1 of network is connected */
+    *iseg2, /* Num of seg to which port 2 of network is connected */
+    *ntyp;  /* Type of networks */
 
   double
-    *x11r,	/* Real and imaginary parts of network impedances */
+    *x11r,  /* Real and imaginary parts of network impedances */
     *x11i,
     *x12r,
     *x12i,
     *x22r,
     *x22i,
-    pin,	/* Total input power from sources */
-    pnls;	/* Power lost in networks */
+    pin,    /* Total input power from sources */
+    pnls;   /* Power lost in networks */
 
   complex double zped;
 
@@ -458,15 +458,15 @@ typedef struct
 /* common  /save/ */
 typedef struct
 {
-  int *ip;	/* Vector of indices of pivot elements used to factor matrix */
+  int *ip;  /* Vector of indices of pivot elements used to factor matrix */
 
   double
-    epsr,		/* Relative dielectric constant of ground */
-    sig,		/* Conductivity of ground */
-    scrwlt,		/* Length of radials in ground screen approximation */
-    scrwrt,		/* Radius of wires in ground screen approximation */
-    fmhz,		/* Saved frequency of operation */
-    last_freq;	/* My addition, Last frequency used in calculations */
+    epsr,       /* Relative dielectric constant of ground */
+    sig,        /* Conductivity of ground */
+    scrwlt,     /* Length of radials in ground screen approximation */
+    scrwrt,     /* Radius of wires in ground screen approximation */
+    fmhz,       /* Saved frequency of operation */
+    last_freq;  /* My addition, Last frequency used in calculations */
 
   /* My addition, replace xtemp, ytemp etc in freq. loop */
   double
@@ -476,8 +476,8 @@ typedef struct
     *sitemp,
     *bitemp;
 
-  double *freq;	/* My addition, frequencies used in freq loop */
-  char *fstep;	/* My addition, freq loop steps that returned results */
+  double *freq; /* My addition, frequencies used in freq loop */
+  char *fstep;  /* My addition, freq loop steps that returned results */
 
 } save_t;
 
@@ -485,8 +485,8 @@ typedef struct
 typedef struct
 {
   int
-    *jco,	/* Stores connection data */
-    jsno,	/* Total number of entries in ax, bx, cx */
+    *jco,   /* Stores connection data */
+    jsno,   /* Total number of entries in ax, bx, cx */
     maxcon; /* Max. no. connections */
 
   double
@@ -507,17 +507,17 @@ typedef struct
 typedef struct
 {
   int
-    *isant,	/* Num of segs on which an aplied field source is located */
-    *ivqd,	/* Num of segs on which a current-slope discontinuity source is located */
-    *iqds,	/* Same as above (?) */
-    nsant,	/* Number of applied field voltage sources */
-    nvqd,	/* Number of applied current-slope discontinuity sources */
-    nqds;	/* Same as above (?) */
+    *isant, /* Num of segs on which an aplied field source is located */
+    *ivqd,  /* Num of segs on which a current-slope discontinuity source is located */
+    *iqds,  /* Same as above (?) */
+    nsant,  /* Number of applied field voltage sources */
+    nvqd,   /* Number of applied current-slope discontinuity sources */
+    nqds;   /* Same as above (?) */
 
   complex double
-    *vqd,	/* Voltage of applied-current slope discontinuity sources */
-    *vqds,	/* Same as above (?) */
-    *vsant;	/* Voltages of applied field voltage sources */
+    *vqd,   /* Voltage of applied-current slope discontinuity sources */
+    *vqds,  /* Same as above (?) */
+    *vsant; /* Voltages of applied field voltage sources */
 
 } vsorc_t;
 
@@ -528,12 +528,12 @@ typedef struct
 typedef struct
 {
   int
-    *ldsegn,	/* My addition, loaded segment numbers */
-    *ldtype,	/* My addition, loading type */
-    nldseg,		/* My addition, number of loaded segs  */
-    nload;		/* Number of loading networks */
+    *ldsegn,    /* My addition, loaded segment numbers */
+    *ldtype,    /* My addition, loading type */
+    nldseg,     /* My addition, number of loaded segs  */
+    nload;      /* Number of loading networks */
 
-  complex double *zarray;	/* = Zi/(Di/lambda) */
+  complex double *zarray;   /* = Zi/(Di/lambda) */
 
 } zload_t;
 
@@ -541,18 +541,18 @@ typedef struct
 typedef struct
 {
   double
-    Wi,			/* Angle (inclination) of Z axis to Screen, +ve to viewer */
-    Wr,			/* Rotation of X-Y plane around Z axis, +ve clockwise */
-    sin_wi,		/* sin(Wi) */
-    cos_wi,		/* cos(Wi) */
-    sin_wr,		/* sin(Wr) */
-    cos_wr,		/* cos(Wr) */
-    r_max,		/* Max distance from xyz origin of a point in antenna */
-    xy_scale1,	/* Scale factor to fit structure into drawable window */
-    xy_scale,	/* Scale factor incorporating zoom factor */
-	xy_zoom,	/* Structure Zoom factor */
-    x_center,	/* X co-ordinate of xyz axes origin in screen's drawable */
-    y_center;	/* Y co-ordinate of xyz axes origin in screen's drawable */
+    Wi,         /* Angle (inclination) of Z axis to Screen, +ve to viewer */
+    Wr,         /* Rotation of X-Y plane around Z axis, +ve clockwise */
+    sin_wi,     /* sin(Wi) */
+    cos_wi,     /* cos(Wi) */
+    sin_wr,     /* sin(Wr) */
+    cos_wr,     /* cos(Wr) */
+    r_max,      /* Max distance from xyz origin of a point in antenna */
+    xy_scale1,  /* Scale factor to fit structure into drawable window */
+    xy_scale,   /* Scale factor incorporating zoom factor */
+    xy_zoom,    /* Structure Zoom factor */
+    x_center,   /* X co-ordinate of xyz axes origin in screen's drawable */
+    y_center;   /* Y co-ordinate of xyz axes origin in screen's drawable */
 
   int
     pixmap_width,  /*  Width of drawable's backing pixmap */
@@ -579,13 +579,13 @@ typedef struct
     nphi,
     iexk,
     iped,
-    ifrq,		/* Frequency specification flag */
-    nfrq,		/* Number of frequency steps */
-    fstep,		/* Frequency step */
-	lastf,		/* Last frequency step */
-    ngraph,		/* Number of graphs to be plotted */
-    pol_type,	/* User-specified Polarization type for plots and patterns */
-	num_jobs;	/* Number of child processes (jobs) to fork */
+    ifrq,       /* Frequency specification flag */
+    nfrq,       /* Number of frequency steps */
+    fstep,      /* Frequency step */
+    lastf,      /* Last frequency step */
+    ngraph,     /* Number of graphs to be plotted */
+    pol_type,   /* User-specified Polarization type for plots and patterns */
+    num_jobs;   /* Number of child processes (jobs) to fork */
 
   double
     *zlr,
@@ -603,12 +603,12 @@ typedef struct
     zpnorm,
     thetis,
     phiss,
-    fmhz,		/* Frequency in MHz, moved from save_t */
-    delfrq;		/* Frequency step for freq loop */
+    fmhz,       /* Frequency in MHz, moved from save_t */
+    delfrq;     /* Frequency step for freq loop */
 
   double
-	mxfrq,	/* Max frequency in freq loop */
-	zo;		/* Characteristic impedance used in VSWR calcs */
+    mxfrq,  /* Max frequency in freq loop */
+    zo;     /* Characteristic impedance used in VSWR calcs */
 
 } calc_data_t;
 
@@ -616,10 +616,10 @@ typedef struct
 typedef struct
 {
   double
-    *zreal,		/* Real part of input impedance */
-    *zimag,		/* Imag part of input impedance */
-    *zmagn,		/* Magnitude of input impedance */
-    *zphase;	/* Phase ang of input impedance */
+    *zreal,     /* Real part of input impedance */
+    *zimag,     /* Imag part of input impedance */
+    *zmagn,     /* Magnitude of input impedance */
+    *zphase;    /* Phase ang of input impedance */
 
 } impedance_data_t;
 
@@ -627,18 +627,18 @@ typedef struct
 typedef struct
 {
   double
-    *gtot,			/* Radiation pattern (total gain) buffer */
-    *max_gain,		/* Maximum gain for each polarization type */
-    *min_gain,		/* Minimum gain for each polarization type */
-    *max_gain_tht,	/* Theta angle where maximum gain occurs */
-    *max_gain_phi,	/*   Phi angle where minimum gain occurs */
-    *tilt,			/* Tilt angle of polarization ellipse  */
-    *axrt;			/* Elliptic axial ratio of pol ellipse */
+    *gtot,          /* Radiation pattern (total gain) buffer */
+    *max_gain,      /* Maximum gain for each polarization type */
+    *min_gain,      /* Minimum gain for each polarization type */
+    *max_gain_tht,  /* Theta angle where maximum gain occurs */
+    *max_gain_phi,  /*   Phi angle where minimum gain occurs */
+    *tilt,          /* Tilt angle of polarization ellipse  */
+    *axrt;          /* Elliptic axial ratio of pol ellipse */
 
   int
-    *max_gain_idx,	/* Where in rad_pattern.gtot the max value occurs */
-    *min_gain_idx,	/* Where in rad_pattern.gtot the min value occurs */
-    *sens;			/* Polarization sense (vertical, horizontal, elliptic etc) */
+    *max_gain_idx,  /* Where in rad_pattern.gtot the max value occurs */
+    *min_gain_idx,  /* Where in rad_pattern.gtot the min value occurs */
+    *sens;          /* Polarization sense (vertical, horizontal, elliptic etc) */
 
 } rad_pattern_t;
 
@@ -646,9 +646,9 @@ typedef struct
 typedef struct
 {
   double
-	/* Magnitude and phase of E/H fields */
-	*ex, *ey, *ez, *hx, *hy, *hz,
-	*fex, *fey, *fez, *fhx, *fhy, *fhz,
+    /* Magnitude and phase of E/H fields */
+    *ex, *ey, *ez, *hx, *hy, *hz,
+    *fex, *fey, *fez, *fhx, *fhy, *fhz,
   /* Real part of E and H field values */
     *erx, *ery, *erz, *er,
     *hrx, *hry, *hrz, *hr;
@@ -673,11 +673,11 @@ typedef struct
 /* Forked processes data */
 typedef struct
 {
-  pid_t child_pid;			/* Child pid */
-  int pnt2child_pipe[2];	/* Parent-to-child write pipe */
-  int child2pnt_pipe[2];	/* Child-to-parent write pipe */
-  char busy;				/* Child process busy flag */
-  int fstep;				/* Frequency step assigned to child */
+  pid_t child_pid;          /* Child pid */
+  int pnt2child_pipe[2];    /* Parent-to-child write pipe */
+  int child2pnt_pipe[2];    /* Child-to-parent write pipe */
+  char busy;                /* Child process busy flag */
+  int fstep;                /* Frequency step assigned to child */
 
   /* File descriptor sets for select() */
   fd_set read_fds;

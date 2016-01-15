@@ -1,5 +1,5 @@
 #ifndef SHARED_H
-#define SHARED_H	1
+#define SHARED_H    1
 
 #include "common.h"
 #include "fork.h"
@@ -8,15 +8,15 @@
 
 /* Editor windows */
 extern GtkWidget
-  *wire_editor,	/* Wire designer window  */
-  *arc_editor,	/* Arc designer window   */
+  *wire_editor, /* Wire designer window  */
+  *arc_editor,  /* Arc designer window   */
   *helix_editor, /* Helix designer window */
-  *patch_editor,	/* Patch designer window */
-  *reflect_editor,	/* Reflect design window */
-  *scale_editor,	/* Scale designer window */
-  *cylinder_editor,	/* Cylinder designer window  */
+  *patch_editor,    /* Patch designer window */
+  *reflect_editor,  /* Reflect design window */
+  *scale_editor,    /* Scale designer window */
+  *cylinder_editor, /* Cylinder designer window  */
   *transform_editor, /* Transform designer window */
-  *gend_editor;	/* Geom End designer window  */
+  *gend_editor; /* Geom End designer window  */
 
 /* Command windows */
 extern GtkWidget
@@ -24,14 +24,14 @@ extern GtkWidget
   *frequency_command, /* Frequency command editor */
   *ground_command, /* Ground command editor (GN) */
   *ground2_command, /* Ground command editor (GD) */
-  *loading_command, /* Loading command editor 	*/
-  *network_command, /* Network command editor	*/
+  *loading_command, /* Loading command editor   */
+  *network_command, /* Network command editor   */
   *txline_command, /* Tran Line command editor */
   *radiation_command, /* Rad Pattern command editor */
   *nearfield_command, /* Near Fields command editor */
   *kernel_command, /* Thin-wire Kernel command editor  */
   *intrange_command, /* Interaction Range command editor */
-  *execute_command	 ; /* Execute (EX card) command editor */
+  *execute_command   ; /* Execute (EX card) command editor */
 
 /* Frequency step entry */
 extern GtkEntry *rdpattern_fstep_entry ;

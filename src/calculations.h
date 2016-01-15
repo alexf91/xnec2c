@@ -17,11 +17,11 @@
  */
 
 #ifndef CALCULATIONS_H
-#define CALCULATIONS_H		1
+#define CALCULATIONS_H      1
 
 #include "common.h"
 #include "support.h"
 
-#define	CCJ		(0.0-I*0.01666666667)
+#define CCJ     (0.0-I*0.01666666667)
 
 #endif

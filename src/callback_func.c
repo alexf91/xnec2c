@@ -32,8 +32,8 @@
  */
   void
 Save_Pixmap(
-	GdkPixmap *pixmap, int pixmap_width,
-	int pixmap_height, char *filename )
+    GdkPixmap *pixmap, int pixmap_width,
+    int pixmap_height, char *filename )
 {
   GdkPixbuf *pixbuf;
   GError *error = NULL;
@@ -41,8 +41,8 @@ Save_Pixmap(
   /* Get image from pixmap */
   gtk_widget_grab_focus( structure_drawingarea );
   pixbuf = gdk_pixbuf_get_from_drawable(
-	  NULL, pixmap, gdk_drawable_get_colormap(pixmap),
-	  0, 0, 0, 0, pixmap_width, pixmap_height );
+      NULL, pixmap, gdk_drawable_get_colormap(pixmap),
+      0, 0, 0, 0, pixmap_width, pixmap_height );
 
   /* Save image as PNG file */
   gdk_pixbuf_save( pixbuf, filename, "png", &error, NULL );
@@ -58,10 +58,10 @@ Save_Pixmap(
  */
 void
 New_Viewer_Angle(
-	double wr, double wi,
-	GtkSpinButton *wr_spb,
-	GtkSpinButton *wi_spb,
-	projection_parameters_t *params )
+    double wr, double wi,
+    GtkSpinButton *wr_spb,
+    GtkSpinButton *wi_spb,
+    projection_parameters_t *params )
 {
   /* Recalculate projection paramenters */
   params->Wr = wr;
@@ -88,7 +88,7 @@ Set_Spin_Button( GtkSpinButton *spin, gdouble value )
 
   /* Issue a value_changed signal if needed (given same values) */
   if( sav == value )
-	g_signal_emit_by_name( G_OBJECT(spin), "value_changed", NULL );
+    g_signal_emit_by_name( G_OBJECT(spin), "value_changed", NULL );
 
 } /* Set_Spin_Button() */
 
@@ -100,30 +100,30 @@ Set_Spin_Button( GtkSpinButton *spin, gdouble value )
  */
 void
 Create_Pixmap(
-	GdkPixmap **pixmap,
-	int *pixmap_width,
-	int *pixmap_height,
-	GtkWidget *widget,
-	GdkEventConfigure *event,
-	projection_parameters_t *params )
+    GdkPixmap **pixmap,
+    int *pixmap_width,
+    int *pixmap_height,
+    GtkWidget *widget,
+    GdkEventConfigure *event,
+    projection_parameters_t *params )
 {
   /* Create or resize pixmap */
   if( *pixmap != NULL )
   {
-	g_object_unref( *pixmap );
-	*pixmap = NULL;
+    g_object_unref( *pixmap );
+    *pixmap = NULL;
   }
 
   *pixmap = gdk_pixmap_new(
-	  widget->window,
-	  event->width,
-	  event->height, -1 );
+      widget->window,
+      event->width,
+      event->height, -1 );
   *pixmap_width  = event->width;
   *pixmap_height = event->height;
 
   /* Calculate new projection parameters */
   if( params != NULL )
-	New_Projection_Parameters( *pixmap_width, *pixmap_height, params );
+    New_Projection_Parameters( *pixmap_width, *pixmap_height, params );
 
 } /* Create_Pixmap() */
 
@@ -135,8 +135,8 @@ Create_Pixmap(
  */
 void
 Motion_Event(
-	GdkEventMotion *event,
-	projection_parameters_t *params )
+    GdkEventMotion *event,
+    projection_parameters_t *params )
 {
   /* Save previous pointer position */
   static gdouble x_old = 0.0, y_old = 0.0;
@@ -150,9 +150,9 @@ Motion_Event(
   /* Initialize saved x,y */
   if( params->reset )
   {
-	x_old = x;
-	y_old = y;
-	params->reset = FALSE;
+    x_old = x;
+    y_old = y;
+    params->reset = FALSE;
   }
 
   /* Recalculate projection parameters
@@ -165,56 +165,56 @@ Motion_Event(
   /* Other buttons are used for moving axes on screen */
   if( event->state & GDK_BUTTON1_MASK )
   {
-	/* Set the structure rotate/incline spinbuttons */
-	if( isFlagSet(COMMON_PROJECTION) ||
-		(params->type == STRUCTURE_DRAWINGAREA) )
-	{
-	  structure_proj_params.Wr -= dx / (gdouble)MOTION_EVENTS_COUNT;
-	  structure_proj_params.Wi += dy / (gdouble)MOTION_EVENTS_COUNT;
-	  snprintf( value, s, "%d", (int)structure_proj_params.Wr );
-	  gtk_entry_set_text( GTK_ENTRY(rotate_structure), value );
-	  snprintf( value, s, "%d", (int)structure_proj_params.Wi );
-	  gtk_entry_set_text( GTK_ENTRY(incline_structure), value );
-	}
+    /* Set the structure rotate/incline spinbuttons */
+    if( isFlagSet(COMMON_PROJECTION) ||
+        (params->type == STRUCTURE_DRAWINGAREA) )
+    {
+      structure_proj_params.Wr -= dx / (gdouble)MOTION_EVENTS_COUNT;
+      structure_proj_params.Wi += dy / (gdouble)MOTION_EVENTS_COUNT;
+      snprintf( value, s, "%d", (int)structure_proj_params.Wr );
+      gtk_entry_set_text( GTK_ENTRY(rotate_structure), value );
+      snprintf( value, s, "%d", (int)structure_proj_params.Wi );
+      gtk_entry_set_text( GTK_ENTRY(incline_structure), value );
+    }
 
-	/* Set the rdpattern rotate/incline spinbuttons */
-	if( (isFlagSet(DRAW_ENABLED) &&
-		  isFlagSet(COMMON_PROJECTION)) ||
-		(params->type == RDPATTERN_DRAWINGAREA) )
-	{
-	  rdpattern_proj_params.Wr -= dx / (gdouble)MOTION_EVENTS_COUNT;
-	  rdpattern_proj_params.Wi += dy / (gdouble)MOTION_EVENTS_COUNT;
-	  snprintf( value, s, "%d", (int)rdpattern_proj_params.Wr );
-	  gtk_entry_set_text( GTK_ENTRY(rotate_rdpattern), value );
-	  snprintf( value, s, "%d", (int)rdpattern_proj_params.Wi );
-	  gtk_entry_set_text( GTK_ENTRY(incline_rdpattern), value );
-	}
+    /* Set the rdpattern rotate/incline spinbuttons */
+    if( (isFlagSet(DRAW_ENABLED) &&
+          isFlagSet(COMMON_PROJECTION)) ||
+        (params->type == RDPATTERN_DRAWINGAREA) )
+    {
+      rdpattern_proj_params.Wr -= dx / (gdouble)MOTION_EVENTS_COUNT;
+      rdpattern_proj_params.Wi += dy / (gdouble)MOTION_EVENTS_COUNT;
+      snprintf( value, s, "%d", (int)rdpattern_proj_params.Wr );
+      gtk_entry_set_text( GTK_ENTRY(rotate_rdpattern), value );
+      snprintf( value, s, "%d", (int)rdpattern_proj_params.Wi );
+      gtk_entry_set_text( GTK_ENTRY(incline_rdpattern), value );
+    }
 
-	/* Rotate/incline structure */
-	if( params->type == STRUCTURE_DRAWINGAREA )
-	{
-	  New_Structure_Projection_Angle();
-	  if( isFlagSet(DRAW_ENABLED) &&
-		  isFlagSet(COMMON_PROJECTION) )
-		New_Radiation_Projection_Angle();
-	}
-	else if( params->type == RDPATTERN_DRAWINGAREA )
-	{
-	  /* Rotate/incline rdpattern */
-	  New_Radiation_Projection_Angle();
-	  if( isFlagSet(COMMON_PROJECTION) )
-		New_Structure_Projection_Angle();
-	}
+    /* Rotate/incline structure */
+    if( params->type == STRUCTURE_DRAWINGAREA )
+    {
+      New_Structure_Projection_Angle();
+      if( isFlagSet(DRAW_ENABLED) &&
+          isFlagSet(COMMON_PROJECTION) )
+        New_Radiation_Projection_Angle();
+    }
+    else if( params->type == RDPATTERN_DRAWINGAREA )
+    {
+      /* Rotate/incline rdpattern */
+      New_Radiation_Projection_Angle();
+      if( isFlagSet(COMMON_PROJECTION) )
+        New_Structure_Projection_Angle();
+    }
   }    /* if( event->state & GDK_BUTTON1_MASK ) */
   else
   {
-	/* Move structure or rdpattern axes on screen */
-	params->x_center += dx;
-	params->y_center -= dy;
-	if( params->type == STRUCTURE_DRAWINGAREA )
-	  Draw_Structure( structure_drawingarea );
-	if( params->type == RDPATTERN_DRAWINGAREA )
-	  Draw_Radiation( rdpattern_drawingarea );
+    /* Move structure or rdpattern axes on screen */
+    params->x_center += dx;
+    params->y_center -= dy;
+    if( params->type == STRUCTURE_DRAWINGAREA )
+      Draw_Structure( structure_drawingarea );
+    if( params->type == RDPATTERN_DRAWINGAREA )
+      Draw_Radiation( rdpattern_drawingarea );
   }
 
 } /* Motion_Event() */
@@ -230,18 +230,18 @@ Plot_Select( GtkToggleButton *togglebutton, unsigned long long int flag )
 {
   if( gtk_toggle_button_get_active(togglebutton) )
   {
-	SetFlag( flag | PLOT_SELECT );
-	calc_data.ngraph++;
+    SetFlag( flag | PLOT_SELECT );
+    calc_data.ngraph++;
   }
   else
   {
-	ClearFlag( flag );
-	calc_data.ngraph--;
+    ClearFlag( flag );
+    calc_data.ngraph--;
   }
 
   /* Trigger a redraw of frequency plots drawingarea */
   if( isFlagSet(PLOT_ENABLED) && isFlagSet(FREQ_LOOP_DONE) )
-	Plot_Frequency_Data();
+    Plot_Frequency_Data();
 
 } /* Plot_Select() */
 
@@ -259,18 +259,18 @@ Delete_Event( gchar *mesg )
 
   if( isFlagSet(FREQ_LOOP_RUNNING) )
   {
-	if( isFlagSet(MAIN_QUIT) )
-	  gtk_label_set_text( GTK_LABEL(lookup_widget(
-			  quit_dialog, "quit_label")),
-		  _("The frequency loop is running\n"\
-			"Really end operation?") );
-	else gtk_label_set_text( GTK_LABEL(lookup_widget(
-			quit_dialog, "quit_label")),
-		_("The frequency loop is running\n"\
-		  "Really close this window?") );
+    if( isFlagSet(MAIN_QUIT) )
+      gtk_label_set_text( GTK_LABEL(lookup_widget(
+              quit_dialog, "quit_label")),
+          _("The frequency loop is running\n"\
+            "Really end operation?") );
+    else gtk_label_set_text( GTK_LABEL(lookup_widget(
+            quit_dialog, "quit_label")),
+        _("The frequency loop is running\n"\
+          "Really close this window?") );
   }
   else gtk_label_set_text( GTK_LABEL(lookup_widget(
-		  quit_dialog, "quit_label")), mesg );
+          quit_dialog, "quit_label")), mesg );
 
 } /* Delete_Event() */
 
@@ -285,15 +285,15 @@ Set_Pol_Menuitem( GtkMenuItem *menuitem )
 {
   gchar *pol_menu[NUM_POL] =
   {
-	"rdpattern_total",
-	"rdpattern_horizontal",
-	"rdpattern_vertical",
-	"rdpattern_right_hand",
-	"rdpattern_left_hand",
+    "rdpattern_total",
+    "rdpattern_horizontal",
+    "rdpattern_vertical",
+    "rdpattern_right_hand",
+    "rdpattern_left_hand",
   };
 
   gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(lookup_widget(
-		  GTK_WIDGET(menuitem), pol_menu[calc_data.pol_type])), TRUE );
+          GTK_WIDGET(menuitem), pol_menu[calc_data.pol_type])), TRUE );
 
 } /* Set_Pol_Menuitem() */
 
@@ -308,18 +308,18 @@ Close_Windows( void )
 {
   if( isFlagSet(PLOT_ENABLED) )
   {
-	gtk_widget_destroy( freqplots_window );
-	gtk_check_menu_item_set_active(
-		GTK_CHECK_MENU_ITEM(lookup_widget(
-			main_window, "main_freqplots")), FALSE );
+    gtk_widget_destroy( freqplots_window );
+    gtk_check_menu_item_set_active(
+        GTK_CHECK_MENU_ITEM(lookup_widget(
+            main_window, "main_freqplots")), FALSE );
   }
 
   if( isFlagSet(DRAW_ENABLED) )
   {
-	gtk_widget_destroy( rdpattern_window );
-	gtk_check_menu_item_set_active(
-		GTK_CHECK_MENU_ITEM(lookup_widget(
-			main_window, "main_rdpattern")), FALSE );
+    gtk_widget_destroy( rdpattern_window );
+    gtk_check_menu_item_set_active(
+        GTK_CHECK_MENU_ITEM(lookup_widget(
+            main_window, "main_rdpattern")), FALSE );
   }
 
 } /* Close_Windows() */
@@ -343,7 +343,7 @@ Open_Editor( GtkTreeView *view )
   /* Find the selected treeview row */
   selection = gtk_tree_view_get_selection( view );
   if( !gtk_tree_selection_get_selected(selection, &model, &iter) )
-	return( FALSE );
+    return( FALSE );
 
   /* Get the "card" name from first column */
   gtk_tree_model_get( model, &iter, 0, &card, -1);
@@ -351,20 +351,20 @@ Open_Editor( GtkTreeView *view )
 
   /* Some "cards" have common editors */
   if( strcmp(card, "GC") == 0 )
-	Strlcpy( card, "GW", s );
+    Strlcpy( card, "GW", s );
   else if( strcmp(card, "SC") == 0 )
-	Strlcpy( card, "SP", s );
+    Strlcpy( card, "SP", s );
   else if( strcmp(card, "SM") == 0 )
-	Strlcpy( card, "SP", s );
+    Strlcpy( card, "SP", s );
   else if( strcmp(card, "NH") == 0 )
-	Strlcpy( card, "NE", s );
+    Strlcpy( card, "NE", s );
   else if( strcmp(card, "GE") == 0 )
   {
-	Gend_Editor( EDITOR_EDIT );
-	return( TRUE );
+    Gend_Editor( EDITOR_EDIT );
+    return( TRUE );
   } /* EN Not editable */
   else if( strcmp(card, "EN") == 0 )
-	return( TRUE );
+    return( TRUE );
 
   /* Send a "clicked" signal to the appropriate editor button */
   card[0] = (gchar)tolower((int)card[0]);
@@ -372,7 +372,7 @@ Open_Editor( GtkTreeView *view )
   button = lookup_widget( GTK_WIDGET(view), card );
   g_free(card);
   if( button != NULL )
-	g_signal_emit_by_name( button, "clicked" );
+    g_signal_emit_by_name( button, "clicked" );
   else return( FALSE );
 
   return( TRUE );
@@ -390,83 +390,83 @@ Main_Rdpattern_Activate( gboolean from_menu )
   /* Set E field check menu item */
   if( fpat.nfeh & NEAR_EFIELD )
   {
-	gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
-		  lookup_widget(rdpattern_window,
-			"rdpattern_e_field")), TRUE );
-	SetFlag( DRAW_EFIELD );
+    gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
+          lookup_widget(rdpattern_window,
+            "rdpattern_e_field")), TRUE );
+    SetFlag( DRAW_EFIELD );
   }
   else
   {
-	gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
-		  lookup_widget(rdpattern_window,
-			"rdpattern_e_field")), FALSE );
-	ClearFlag( DRAW_EFIELD );
+    gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
+          lookup_widget(rdpattern_window,
+            "rdpattern_e_field")), FALSE );
+    ClearFlag( DRAW_EFIELD );
   }
 
   /* Set H field check menu item */
   if( fpat.nfeh & NEAR_HFIELD )
   {
-	gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
-		  lookup_widget(rdpattern_window,
-			"rdpattern_h_field")), TRUE );
-	SetFlag( DRAW_HFIELD );
+    gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
+          lookup_widget(rdpattern_window,
+            "rdpattern_h_field")), TRUE );
+    SetFlag( DRAW_HFIELD );
   }
   else
   {
-	gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
-		  lookup_widget(rdpattern_window,
-			"rdpattern_h_field")), FALSE );
-	ClearFlag( DRAW_HFIELD );
+    gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
+          lookup_widget(rdpattern_window,
+            "rdpattern_h_field")), FALSE );
+    ClearFlag( DRAW_HFIELD );
   }
 
   /* Set Poynting vector check menu item */
   if( (fpat.nfeh & NEAR_EHFIELD) == NEAR_EHFIELD )
   {
-	gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
-		  lookup_widget(rdpattern_window,
-			"rdpattern_poynting_vector")), TRUE );
-	SetFlag( DRAW_POYNTING );
+    gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
+          lookup_widget(rdpattern_window,
+            "rdpattern_poynting_vector")), TRUE );
+    SetFlag( DRAW_POYNTING );
   }
   else
   {
-	gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
-		  lookup_widget(rdpattern_window,
-			"rdpattern_poynting_vector")), FALSE );
-	ClearFlag( DRAW_POYNTING );
+    gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
+          lookup_widget(rdpattern_window,
+            "rdpattern_poynting_vector")), FALSE );
+    ClearFlag( DRAW_POYNTING );
   }
 
   /* Set structure overlay in Rad Pattern window */
   if( isFlagClear(OVERLAY_STRUCT) )
-	gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
-		  lookup_widget(rdpattern_window,
-			"rdpattern_overlay_structure")), FALSE );
+    gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
+          lookup_widget(rdpattern_window,
+            "rdpattern_overlay_structure")), FALSE );
   else
-	gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
-		  lookup_widget(rdpattern_window,
-			"rdpattern_overlay_structure")), TRUE );
+    gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(
+          lookup_widget(rdpattern_window,
+            "rdpattern_overlay_structure")), TRUE );
 
 
   /* Sync common projection spinbuttons */
   if( isFlagSet(COMMON_PROJECTION) )
   {
-	gchar value[6];
-	size_t s = sizeof( value ) - 1;
+    gchar value[6];
+    size_t s = sizeof( value ) - 1;
 
-	rdpattern_proj_params.Wr = structure_proj_params.Wr;
-	rdpattern_proj_params.Wi = structure_proj_params.Wi;
-	snprintf( value, s, "%d", (int)rdpattern_proj_params.Wr );
-	value[s] = '\0';
-	gtk_entry_set_text( GTK_ENTRY(rotate_rdpattern), value );
-	snprintf( value, s, "%d", (int)rdpattern_proj_params.Wi );
-	value[s] = '\0';
-	gtk_entry_set_text( GTK_ENTRY(incline_rdpattern), value );
+    rdpattern_proj_params.Wr = structure_proj_params.Wr;
+    rdpattern_proj_params.Wi = structure_proj_params.Wi;
+    snprintf( value, s, "%d", (int)rdpattern_proj_params.Wr );
+    value[s] = '\0';
+    gtk_entry_set_text( GTK_ENTRY(rotate_rdpattern), value );
+    snprintf( value, s, "%d", (int)rdpattern_proj_params.Wi );
+    value[s] = '\0';
+    gtk_entry_set_text( GTK_ENTRY(incline_rdpattern), value );
   }
-  else	/* Initialize radiation pattern projection angles */
+  else  /* Initialize radiation pattern projection angles */
   {
-	rdpattern_proj_params.Wr =
-	  gtk_spin_button_get_value(rotate_rdpattern);
-	rdpattern_proj_params.Wi =
-	  gtk_spin_button_get_value(incline_rdpattern);
+    rdpattern_proj_params.Wr =
+      gtk_spin_button_get_value(rotate_rdpattern);
+    rdpattern_proj_params.Wi =
+      gtk_spin_button_get_value(incline_rdpattern);
   }
   New_Radiation_Projection_Angle();
 
@@ -477,12 +477,12 @@ Main_Rdpattern_Activate( gboolean from_menu )
   /* Display frequency in freq spinbutton */
   if( from_menu )
   {
-	char value[9];
-	size_t s = sizeof( value );
-	snprintf( value, s, "%.3f", calc_data.fmhz );
-	value[s - 1] = '\0';
-	gtk_entry_set_text(
-		GTK_ENTRY(rdpattern_frequency), value );
+    char value[9];
+    size_t s = sizeof( value );
+    snprintf( value, s, "%.3f", calc_data.fmhz );
+    value[s - 1] = '\0';
+    gtk_entry_set_text(
+        GTK_ENTRY(rdpattern_frequency), value );
   }
 
   /* Enable Gain or E/H field drawing */
@@ -503,10 +503,10 @@ Main_Freqplots_Activate( void )
    * Elementary Current Source Excitation */
   if( (fpat.ixtyp != 0) && (fpat.ixtyp != 5) )
   {
-	stop( _("Not available for Incident Field or\n"\
-		  "Elementary Current Source Excitation.\n"\
-		  "(Excitation Types 1 to 4)"), ERR_OK );
-	return( FALSE );
+    stop( _("Not available for Incident Field or\n"\
+          "Elementary Current Source Excitation.\n"\
+          "(Excitation Types 1 to 4)"), ERR_OK );
+    return( FALSE );
   }
 
   /* Enable freq data graph plotting */
@@ -531,30 +531,30 @@ Rdpattern_Gain_Togglebutton_Toggled( gboolean flag )
   /* Enable or not gain (radiation) pattern plotting */
   if( flag )
   {
-	SetFlag( DRAW_GAIN );
-	ClearFlag( DRAW_EHFIELD );
-	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(lookup_widget(
-			rdpattern_window, "rdpattern_eh_togglebutton")), FALSE );
+    SetFlag( DRAW_GAIN );
+    ClearFlag( DRAW_EHFIELD );
+    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(lookup_widget(
+            rdpattern_window, "rdpattern_eh_togglebutton")), FALSE );
 
-	/* Redraw radiation pattern drawingarea */
-	if( isFlagSet(DRAW_ENABLED) &&
-		isFlagClear(FREQ_LOOP_RUNNING) )
-	{
-	  if( !crnt.valid ) Redo_Currents( NULL );
-	  SetFlag( DRAW_NEW_RDPAT );
-	  Draw_Radiation( rdpattern_drawingarea );
-	}
+    /* Redraw radiation pattern drawingarea */
+    if( isFlagSet(DRAW_ENABLED) &&
+        isFlagClear(FREQ_LOOP_RUNNING) )
+    {
+      if( !crnt.valid ) Redo_Currents( NULL );
+      SetFlag( DRAW_NEW_RDPAT );
+      Draw_Radiation( rdpattern_drawingarea );
+    }
 
-	Set_Window_Labels();
+    Set_Window_Labels();
   }
   else
   {
-	ClearFlag( DRAW_GAIN );
-	/* Clear radiation pattern drawingarea */
-	if( isFlagClear(DRAW_EHFIELD) &&
-		isFlagSet(DRAW_ENABLED) )
-	  Draw_Radiation( rdpattern_drawingarea );
-	Free_Draw_Buffers();
+    ClearFlag( DRAW_GAIN );
+    /* Clear radiation pattern drawingarea */
+    if( isFlagClear(DRAW_EHFIELD) &&
+        isFlagSet(DRAW_ENABLED) )
+      Draw_Radiation( rdpattern_drawingarea );
+    Free_Draw_Buffers();
   }
 
   return;
@@ -575,44 +575,44 @@ Rdpattern_EH_Togglebutton_Toggled( gboolean flag )
   /* Enable or not E/H fields plotting */
   if( flag )
   {
-	SetFlag( DRAW_EHFIELD );
-	ClearFlag( DRAW_GAIN );
-	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(lookup_widget(
-			rdpattern_window, "rdpattern_gain_togglebutton")), FALSE );
+    SetFlag( DRAW_EHFIELD );
+    ClearFlag( DRAW_GAIN );
+    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(lookup_widget(
+            rdpattern_window, "rdpattern_gain_togglebutton")), FALSE );
 
-	/* Delegate near field calcuations to child
-	 * processes if forked and near field data valid */
-	if( FORKED )
-	{
-	  Alloc_Nearfield_Buffers(fpat.nrx, fpat.nry, fpat.nrz);
-	  Pass_EH_Flags();
-	}
+    /* Delegate near field calcuations to child
+     * processes if forked and near field data valid */
+    if( FORKED )
+    {
+      Alloc_Nearfield_Buffers(fpat.nrx, fpat.nry, fpat.nrz);
+      Pass_EH_Flags();
+    }
 
-	/* Redraw radiation pattern drawingarea */
-	if( isFlagSet(DRAW_ENABLED) &&
-		isFlagClear(FREQ_LOOP_RUNNING) )
-	{
-	  if( !near_field.valid ) Redo_Currents(NULL);
-	  Near_Field_Pattern();
-	  SetFlag( DRAW_NEW_EHFIELD );
-	  Draw_Radiation( rdpattern_drawingarea );
-	}
+    /* Redraw radiation pattern drawingarea */
+    if( isFlagSet(DRAW_ENABLED) &&
+        isFlagClear(FREQ_LOOP_RUNNING) )
+    {
+      if( !near_field.valid ) Redo_Currents(NULL);
+      Near_Field_Pattern();
+      SetFlag( DRAW_NEW_EHFIELD );
+      Draw_Radiation( rdpattern_drawingarea );
+    }
 
-	Set_Window_Labels();
+    Set_Window_Labels();
   }
   else
   {
-	ClearFlag( NEAREH_ANIMATE );
-	ClearFlag( DRAW_EHFIELD );
+    ClearFlag( NEAREH_ANIMATE );
+    ClearFlag( DRAW_EHFIELD );
 
-	/* Clear radiation pattern drawingarea */
-	if( isFlagClear(DRAW_GAIN)  &&
-		isFlagSet(DRAW_ENABLED) )
-	  Draw_Radiation( rdpattern_drawingarea );
+    /* Clear radiation pattern drawingarea */
+    if( isFlagClear(DRAW_GAIN)  &&
+        isFlagSet(DRAW_ENABLED) )
+      Draw_Radiation( rdpattern_drawingarea );
 
-	/* Disable near field calcuations
-	 * by child processes if forked */
-	Pass_EH_Flags();
+    /* Disable near field calcuations
+     * by child processes if forked */
+    Pass_EH_Flags();
   }
 
 } /* Rdpattern_EH_Togglebutton_Toggled() */
@@ -629,41 +629,41 @@ Main_Currents_Togglebutton_Toggled( gboolean flag )
   /* Enable calculation and rendering of structure curents */
   if( flag )
   {
-	SetFlag( DRAW_CURRENTS );
-	ClearFlag( DRAW_CHARGES );
-	crnt.newer = 1;
-	Alloc_Crnt_Buffs();
+    SetFlag( DRAW_CURRENTS );
+    ClearFlag( DRAW_CHARGES );
+    crnt.newer = 1;
+    Alloc_Crnt_Buffs();
 
-	gtk_toggle_button_set_active(
-		GTK_TOGGLE_BUTTON(lookup_widget(main_window,
-			"main_charges_togglebutton")), FALSE );
-	gtk_label_set_text(
-		GTK_LABEL(lookup_widget(main_window, "struct_label")),
-		_("View Currents") );
+    gtk_toggle_button_set_active(
+        GTK_TOGGLE_BUTTON(lookup_widget(main_window,
+            "main_charges_togglebutton")), FALSE );
+    gtk_label_set_text(
+        GTK_LABEL(lookup_widget(main_window, "struct_label")),
+        _("View Currents") );
 
-	if( !crnt.valid && isFlagClear(FREQ_LOOP_RUNNING) )
-	  Redo_Currents( NULL );
-	else if( crnt.valid )
-	  Draw_Structure( structure_drawingarea );
+    if( !crnt.valid && isFlagClear(FREQ_LOOP_RUNNING) )
+      Redo_Currents( NULL );
+    else if( crnt.valid )
+      Draw_Structure( structure_drawingarea );
 
-	if( isFlagSet(OVERLAY_STRUCT) )
-	  Draw_Radiation( rdpattern_drawingarea );
+    if( isFlagSet(OVERLAY_STRUCT) )
+      Draw_Radiation( rdpattern_drawingarea );
   }
   else
   {
-	ClearFlag( DRAW_CURRENTS );
-	if( isFlagClear(DRAW_CHARGES) )
-	{
-	  /* Redraw structure on screen if frequency loop is not running */
-	  gtk_label_set_text(
-		  GTK_LABEL(lookup_widget(main_window, "struct_label")),
-		  _("View Geometry") );
-	  if( isFlagClear(FREQ_LOOP_RUNNING) )
-		Draw_Structure( structure_drawingarea );
-	  Free_Crnt_Buffs();
-	}
-	if( isFlagSet(OVERLAY_STRUCT) )
-	  Draw_Radiation( rdpattern_drawingarea );
+    ClearFlag( DRAW_CURRENTS );
+    if( isFlagClear(DRAW_CHARGES) )
+    {
+      /* Redraw structure on screen if frequency loop is not running */
+      gtk_label_set_text(
+          GTK_LABEL(lookup_widget(main_window, "struct_label")),
+          _("View Geometry") );
+      if( isFlagClear(FREQ_LOOP_RUNNING) )
+        Draw_Structure( structure_drawingarea );
+      Free_Crnt_Buffs();
+    }
+    if( isFlagSet(OVERLAY_STRUCT) )
+      Draw_Radiation( rdpattern_drawingarea );
   }
 } /* Main_Currents_Togglebutton_Toggled() */
 
@@ -678,41 +678,41 @@ Main_Charges_Togglebutton_Toggled( gboolean flag )
 {
   if( flag )
   {
-	SetFlag( DRAW_CHARGES );
-	ClearFlag( DRAW_CURRENTS );
-	crnt.newer = 1;
-	Alloc_Crnt_Buffs();
+    SetFlag( DRAW_CHARGES );
+    ClearFlag( DRAW_CURRENTS );
+    crnt.newer = 1;
+    Alloc_Crnt_Buffs();
 
-	gtk_toggle_button_set_active(
-		GTK_TOGGLE_BUTTON(lookup_widget(main_window,
-			"main_currents_togglebutton")), FALSE );
-	gtk_label_set_text(
-		GTK_LABEL(lookup_widget(main_window, "struct_label")),
-		_("View Charges") );
+    gtk_toggle_button_set_active(
+        GTK_TOGGLE_BUTTON(lookup_widget(main_window,
+            "main_currents_togglebutton")), FALSE );
+    gtk_label_set_text(
+        GTK_LABEL(lookup_widget(main_window, "struct_label")),
+        _("View Charges") );
 
-	if( !crnt.valid && isFlagClear(FREQ_LOOP_RUNNING) )
-	  Redo_Currents( NULL );
-	else if( crnt.valid )
-	  Draw_Structure( structure_drawingarea );
+    if( !crnt.valid && isFlagClear(FREQ_LOOP_RUNNING) )
+      Redo_Currents( NULL );
+    else if( crnt.valid )
+      Draw_Structure( structure_drawingarea );
 
-	if( isFlagSet(OVERLAY_STRUCT) )
-	  Draw_Radiation( rdpattern_drawingarea );
+    if( isFlagSet(OVERLAY_STRUCT) )
+      Draw_Radiation( rdpattern_drawingarea );
   }
   else
   {
-	ClearFlag( DRAW_CHARGES );
-	if( isFlagClear(DRAW_CURRENTS) )
-	{
-	  /* Redraw structure on screen if frequency loop is not running */
-	  gtk_label_set_text(
-		  GTK_LABEL(lookup_widget(main_window, "struct_label")),
-		  _("View Geometry") );
-	  if( isFlagClear(FREQ_LOOP_RUNNING) )
-		Draw_Structure( structure_drawingarea );
-	  Free_Crnt_Buffs();
-	}
-	if( isFlagSet(OVERLAY_STRUCT) )
-	  Draw_Radiation( rdpattern_drawingarea );
+    ClearFlag( DRAW_CHARGES );
+    if( isFlagClear(DRAW_CURRENTS) )
+    {
+      /* Redraw structure on screen if frequency loop is not running */
+      gtk_label_set_text(
+          GTK_LABEL(lookup_widget(main_window, "struct_label")),
+          _("View Geometry") );
+      if( isFlagClear(FREQ_LOOP_RUNNING) )
+        Draw_Structure( structure_drawingarea );
+      Free_Crnt_Buffs();
+    }
+    if( isFlagSet(OVERLAY_STRUCT) )
+      Draw_Radiation( rdpattern_drawingarea );
   }
 } /* Main_Charges_Togglebutton_Toggled() */
 
@@ -730,18 +730,18 @@ Open_Nec2_Editor( int action )
   gtk_widget_show( nec2_edit_window );
 
   geom_treeview = GTK_TREE_VIEW(
-	  lookup_widget(nec2_edit_window, "nec2_geom_treeview") );
+      lookup_widget(nec2_edit_window, "nec2_geom_treeview") );
   cmnd_treeview = GTK_TREE_VIEW(
-	  lookup_widget(nec2_edit_window, "nec2_cmnd_treeview") );
+      lookup_widget(nec2_edit_window, "nec2_cmnd_treeview") );
 
   Nec2_Input_File_Treeview( action );
 
   geom_adjustment = gtk_scrolled_window_get_vadjustment(
-	  GTK_SCROLLED_WINDOW(lookup_widget(nec2_edit_window,
-		  "scrolledwindow4")) );
+      GTK_SCROLLED_WINDOW(lookup_widget(nec2_edit_window,
+          "scrolledwindow4")) );
   cmnd_adjustment = gtk_scrolled_window_get_vadjustment(
-	  GTK_SCROLLED_WINDOW(lookup_widget(nec2_edit_window,
-		  "scrolledwindow3")) );
+      GTK_SCROLLED_WINDOW(lookup_widget(nec2_edit_window,
+          "scrolledwindow3")) );
 } /* Open_Nec2_Editor() */
 
 /*-----------------------------------------------------------------------*/
@@ -755,8 +755,8 @@ Open_Nec2_Editor( int action )
 Nec2_Apply_Checkbutton( void )
 {
   return( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(
-		  lookup_widget(nec2_edit_window,
-			"nec2_apply_checkbutton" ))) );
+          lookup_widget(nec2_edit_window,
+            "nec2_apply_checkbutton" ))) );
 }
 
 /*-----------------------------------------------------------------------*/
@@ -775,16 +775,16 @@ Gtk_Quit( void )
 
   /* Kill child processes */
   if( FORKED && !CHILD )
-	while( num_child_procs )
-	{
-	  num_child_procs--;
-	  kill( forked_proc_data[num_child_procs]->child_pid, SIGKILL );
-	}
+    while( num_child_procs )
+    {
+      num_child_procs--;
+      kill( forked_proc_data[num_child_procs]->child_pid, SIGKILL );
+    }
 
   /* Kill possibly nested loops */
   k = (int)gtk_main_level();
   for( i = 0; i < k; i++ )
-	gtk_main_quit();
+    gtk_main_quit();
 
 } /* Gtk_Quit() */
 
@@ -807,18 +807,18 @@ Pass_EH_Flags( void )
   /* Tell child process to calculate near field data */
   cnt = strlen( fork_commands[EHFIELD] );
   for( idx = 0; idx < calc_data.num_jobs; idx++ )
-	Write_Pipe( idx, fork_commands[EHFIELD], (ssize_t)cnt, TRUE );
+    Write_Pipe( idx, fork_commands[EHFIELD], (ssize_t)cnt, TRUE );
 
   /* Tell child to set near field flags */
   flag = 0;
-  if( isFlagSet(DRAW_EHFIELD) )		flag |= 0x01;
-  if( isFlagSet(NEAREH_SNAPSHOT) )	flag |= 0x02;
-  if( isFlagSet(DRAW_EFIELD) )		flag |= 0x04;
-  if( isFlagSet(DRAW_HFIELD) )		flag |= 0x08;
+  if( isFlagSet(DRAW_EHFIELD) )     flag |= 0x01;
+  if( isFlagSet(NEAREH_SNAPSHOT) )  flag |= 0x02;
+  if( isFlagSet(DRAW_EFIELD) )      flag |= 0x04;
+  if( isFlagSet(DRAW_HFIELD) )      flag |= 0x08;
 
   cnt = sizeof( flag );
   for( idx = 0; idx < calc_data.num_jobs; idx++ )
-	Write_Pipe( idx, &flag, (ssize_t)cnt, TRUE );
+    Write_Pipe( idx, &flag, (ssize_t)cnt, TRUE );
 
 } /* Pass_EH_Flags */
 
@@ -834,16 +834,16 @@ Alloc_Crnt_Buffs( void )
   /* Patch currents buffer */
   if( data.m > 0 )
   {
-	size_t mreq = (size_t)data.m * sizeof( double );
-	mem_realloc( (void **)&ct1m, mreq, "in callback_func.c" );
-	mem_realloc( (void **)&ct2m, mreq, "in callback_func.c" );
+    size_t mreq = (size_t)data.m * sizeof( double );
+    mem_realloc( (void **)&ct1m, mreq, "in callback_func.c" );
+    mem_realloc( (void **)&ct2m, mreq, "in callback_func.c" );
   }
 
   /* Segment currents buffer */
   if( data.n > 0 )
   {
-	size_t mreq = (size_t)data.n * sizeof( double );
-	mem_realloc( (void **)&cmag, mreq, "in callback_func.c" );
+    size_t mreq = (size_t)data.n * sizeof( double );
+    mem_realloc( (void **)&cmag, mreq, "in callback_func.c" );
   }
 
 } /* Alloc_Crnt_Buffs() */

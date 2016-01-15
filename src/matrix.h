@@ -16,13 +16,13 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef	MATRIX_H
-#define	MATRIX_H	1
+#ifndef MATRIX_H
+#define MATRIX_H    1
 
 #include "common.h"
 #include "support.h"
 
-#define	RETA	2.654420938E-3
+#define RETA    2.654420938E-3
 
 #endif
 

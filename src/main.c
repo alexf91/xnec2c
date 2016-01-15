@@ -67,49 +67,49 @@ main (int argc, char *argv[])
   calc_data.num_jobs = 1;
   while( (option = getopt(argc, argv, "i:j:hv") ) != -1 )
   {
-	switch( option )
-	{
-	  case 'i': /* specify input file name */
-		if( strlen(optarg) > 80 )
-		{
-		  fprintf ( stderr,
-			  _("xnec2c: input file name too long (>80 char)\n") );
-		  exit(-1);
-		}
-		Strlcpy( infile, optarg, sizeof(infile) ); /* For null term. */
-		break;
+    switch( option )
+    {
+      case 'i': /* specify input file name */
+        if( strlen(optarg) > 80 )
+        {
+          fprintf ( stderr,
+              _("xnec2c: input file name too long (>80 char)\n") );
+          exit(-1);
+        }
+        Strlcpy( infile, optarg, sizeof(infile) ); /* For null term. */
+        break;
 
-	  case 'j': /* number of child processes = num of processors */
-		calc_data.num_jobs = atoi( optarg );
-		break;
+      case 'j': /* number of child processes = num of processors */
+        calc_data.num_jobs = atoi( optarg );
+        break;
 
-	  case 'h': /* print usage and exit */
-		usage();
-		exit(0);
+      case 'h': /* print usage and exit */
+        usage();
+        exit(0);
 
-	  case 'v': /* print xnec2c version */
-		puts( PACKAGE_STRING );
-		exit(0);
+      case 'v': /* print xnec2c version */
+        puts( PACKAGE_STRING );
+        exit(0);
 
-	  default:
-		usage();
-		exit(0);
+      default:
+        usage();
+        exit(0);
 
-	} /* end of switch( option ) */
+    } /* end of switch( option ) */
 
   } /* while( (option = getopt(argc, argv, "i:o:hv") ) != -1 ) */
 
   /* Read input file path name if not supplied by -i option */
   if( (strlen(infile) == 0) &&
-	  (strstr(argv[argc - 1], ".nec") || strstr(argv[argc - 1], ".NEC")) )
+      (strstr(argv[argc - 1], ".nec") || strstr(argv[argc - 1], ".NEC")) )
   {
-	if( strlen(argv[argc - 1]) > 80 )
-	{
-	  fprintf ( stderr,
-		  _("xnec2c: input file path name too long (>80 char)\n") );
-	  exit(-1);
-	}
-	Strlcpy( infile, argv[argc-1], sizeof(infile) ); /* For null term. */
+    if( strlen(argv[argc - 1]) > 80 )
+    {
+      fprintf ( stderr,
+          _("xnec2c: input file path name too long (>80 char)\n") );
+      exit(-1);
+    }
+    Strlcpy( infile, argv[argc-1], sizeof(infile) ); /* For null term. */
   }
 
   /* When forking is useful, e.g. if more than 1 processor is
@@ -120,71 +120,71 @@ main (int argc, char *argv[])
   /* Allocate buffers for fork data */
   if( calc_data.num_jobs > 1 )
   {
-	size_t mreq = (size_t)calc_data.num_jobs * sizeof(forked_proc_data_t *);
-	mem_alloc( (void **)&forked_proc_data, mreq, "in main.c" );
-	for( idx = 0; idx < calc_data.num_jobs; idx++ )
-	{
-	  forked_proc_data[idx] = NULL;
-	  mreq = sizeof(forked_proc_data_t);
-	  mem_alloc( (void **)&forked_proc_data[idx], mreq, "in main.c" );
-	}
+    size_t mreq = (size_t)calc_data.num_jobs * sizeof(forked_proc_data_t *);
+    mem_alloc( (void **)&forked_proc_data, mreq, "in main.c" );
+    for( idx = 0; idx < calc_data.num_jobs; idx++ )
+    {
+      forked_proc_data[idx] = NULL;
+      mreq = sizeof(forked_proc_data_t);
+      mem_alloc( (void **)&forked_proc_data[idx], mreq, "in main.c" );
+    }
 
-	/* Fork child processes */
-	for( idx = 0; idx < calc_data.num_jobs; idx++ )
-	{
-	  /* Make pipes to transfer data */
-	  err = pipe( forked_proc_data[idx]->pnt2child_pipe );
-	  if( err )
-	  {
-		perror( "xnec2c: pipe()" );
-		fprintf( stderr,
-			_("xnec2c: exiting after fatal error (pipe() failed)") );
-		exit(-1);
-	  }
+    /* Fork child processes */
+    for( idx = 0; idx < calc_data.num_jobs; idx++ )
+    {
+      /* Make pipes to transfer data */
+      err = pipe( forked_proc_data[idx]->pnt2child_pipe );
+      if( err )
+      {
+        perror( "xnec2c: pipe()" );
+        fprintf( stderr,
+            _("xnec2c: exiting after fatal error (pipe() failed)") );
+        exit(-1);
+      }
 
-	  err = pipe( forked_proc_data[idx]->child2pnt_pipe );
-	  if( err )
-	  {
-		perror( "xnec2c: pipe()" );
-		fprintf( stderr,
-			_("xnec2c: exiting after fatal error (pipe() failed)") );
-		exit(-1);
-	  }
+      err = pipe( forked_proc_data[idx]->child2pnt_pipe );
+      if( err )
+      {
+        perror( "xnec2c: pipe()" );
+        fprintf( stderr,
+            _("xnec2c: exiting after fatal error (pipe() failed)") );
+        exit(-1);
+      }
 
-	  /* Fork child process */
-	  forked_proc_data[idx]->child_pid = fork();
-	  if( forked_proc_data[idx]->child_pid == -1 )
-	  {
-		perror( "xnec2c: fork()" );
-		fprintf( stderr,
-			_("xnec2c: exiting after fatal error (fork() failed)") );
-		exit(-1);
-	  }
-	  else child_pid = forked_proc_data[idx]->child_pid;
+      /* Fork child process */
+      forked_proc_data[idx]->child_pid = fork();
+      if( forked_proc_data[idx]->child_pid == -1 )
+      {
+        perror( "xnec2c: fork()" );
+        fprintf( stderr,
+            _("xnec2c: exiting after fatal error (fork() failed)") );
+        exit(-1);
+      }
+      else child_pid = forked_proc_data[idx]->child_pid;
 
-	  /* Child get out of forking loop! */
-	  if( CHILD ) Child_Process( idx );
+      /* Child get out of forking loop! */
+      if( CHILD ) Child_Process( idx );
 
-	  /* Ready to accept a job */
-	  forked_proc_data[idx]->busy = FALSE;
+      /* Ready to accept a job */
+      forked_proc_data[idx]->busy = FALSE;
 
-	  /* Close unwanted pipe ends */
-	  close( forked_proc_data[idx]->pnt2child_pipe[READ] );
-	  close( forked_proc_data[idx]->child2pnt_pipe[WRITE] );
+      /* Close unwanted pipe ends */
+      close( forked_proc_data[idx]->pnt2child_pipe[READ] );
+      close( forked_proc_data[idx]->child2pnt_pipe[WRITE] );
 
-	  /* Set file descriptors for select() */
-	  FD_ZERO( &forked_proc_data[idx]->read_fds );
-	  FD_SET( forked_proc_data[idx]->child2pnt_pipe[READ],
-		  &forked_proc_data[idx]->read_fds );
-	  FD_ZERO( &forked_proc_data[idx]->write_fds );
-	  FD_SET( forked_proc_data[idx]->pnt2child_pipe[WRITE],
-		  &forked_proc_data[idx]->write_fds );
+      /* Set file descriptors for select() */
+      FD_ZERO( &forked_proc_data[idx]->read_fds );
+      FD_SET( forked_proc_data[idx]->child2pnt_pipe[READ],
+          &forked_proc_data[idx]->read_fds );
+      FD_ZERO( &forked_proc_data[idx]->write_fds );
+      FD_SET( forked_proc_data[idx]->pnt2child_pipe[WRITE],
+          &forked_proc_data[idx]->write_fds );
 
-	  /* Count child processes */
-	  num_child_procs++;
-	} /* for( idx = 0; idx < calc_data.num_jobs; idx++ ) */
+      /* Count child processes */
+      num_child_procs++;
+    } /* for( idx = 0; idx < calc_data.num_jobs; idx++ ) */
 
-	FORKED = TRUE;
+    FORKED = TRUE;
   } /* if( calc_data.num_jobs > 1 ) */
 
   gtk_set_locale ();
@@ -201,44 +201,44 @@ main (int argc, char *argv[])
   gtk_window_set_title( GTK_WINDOW(main_window), PACKAGE_STRING );
   gtk_widget_show (main_window);
   mainwin_frequency = GTK_SPIN_BUTTON(lookup_widget(
-		main_window, "main_freq_spinbutton") );
+        main_window, "main_freq_spinbutton") );
 
   gtk_widget_hide_all( lookup_widget(
-		main_window, "main_hbox1") );
+        main_window, "main_hbox1") );
   gtk_widget_hide_all( lookup_widget(
-		main_window, "main_hbox2") );
+        main_window, "main_hbox2") );
   gtk_widget_hide_all( lookup_widget(
-		main_window, "main_hbox3") );
+        main_window, "main_hbox3") );
   gtk_widget_hide_all( lookup_widget(
-		main_window, "main_view_menuitem") );
+        main_window, "main_view_menuitem") );
   gtk_widget_hide( lookup_widget(
-		main_window, "structure_drawingarea") );
+        main_window, "structure_drawingarea") );
 
   structure_drawingarea = lookup_widget(
-	  main_window, "structure_drawingarea");
+      main_window, "structure_drawingarea");
   gtk_widget_add_events(
-	  GTK_WIDGET(structure_drawingarea),
-	  GDK_BUTTON_MOTION_MASK | GDK_BUTTON_PRESS_MASK );
+      GTK_WIDGET(structure_drawingarea),
+      GDK_BUTTON_MOTION_MASK | GDK_BUTTON_PRESS_MASK );
   structure_motion_handler = g_signal_connect (
-	  (gpointer) structure_drawingarea,
-	  "motion_notify_event",
-	  G_CALLBACK (on_structure_drawingarea_motion_notify_event),
-	  NULL);
+      (gpointer) structure_drawingarea,
+      "motion_notify_event",
+      G_CALLBACK (on_structure_drawingarea_motion_notify_event),
+      NULL);
 
   /* Initialize structure projection angles */
   rotate_structure  = GTK_SPIN_BUTTON(lookup_widget(
-		main_window, "main_rotate_spinbutton"));
+        main_window, "main_rotate_spinbutton"));
   incline_structure = GTK_SPIN_BUTTON(lookup_widget(
-		main_window, "main_incline_spinbutton"));
+        main_window, "main_incline_spinbutton"));
   structure_zoom = GTK_SPIN_BUTTON(lookup_widget(
-		main_window, "structure_zoom_spinbutton"));
+        main_window, "structure_zoom_spinbutton"));
   structure_fstep_entry = GTK_ENTRY(lookup_widget(
-		main_window, "structure_fstep_entry")) ;
+        main_window, "structure_fstep_entry")) ;
 
   structure_proj_params.Wr =
-	gtk_spin_button_get_value(rotate_structure);
+    gtk_spin_button_get_value(rotate_structure);
   structure_proj_params.Wi =
-	gtk_spin_button_get_value(incline_structure);
+    gtk_spin_button_get_value(incline_structure);
 
   structure_proj_params.xy_zoom = 1.0;
   structure_proj_params.reset = TRUE;
@@ -251,9 +251,9 @@ main (int argc, char *argv[])
 
   /* Open input file if specified */
   if( strlen(infile) > 0 )
-	g_idle_add( Open_Input_File, (gpointer)&new );
+    g_idle_add( Open_Input_File, (gpointer)&new );
   else
-	SetFlag( INPUT_PENDING );
+    SetFlag( INPUT_PENDING );
 
   gtk_main ();
 
@@ -274,7 +274,7 @@ Open_Input_File( gpointer udata )
 
   /* Stop freq loop */
   if( isFlagSet(FREQ_LOOP_RUNNING) )
-	Stop_Frequency_Loop();
+    Stop_Frequency_Loop();
 
   /* Close open files if any */
   Close_File( &input_fp );
@@ -291,43 +291,43 @@ Open_Input_File( gpointer udata )
   ok = Read_Comments() && Read_Geometry() && Read_Commands();
   if( !ok )
   {
-	/* Hide main control buttons etc */
-	gtk_widget_hide_all( lookup_widget(
-		  main_window, "main_hbox1") );
-	gtk_widget_hide_all( lookup_widget(
-		  main_window, "main_hbox2") );
-	gtk_widget_hide_all( lookup_widget(
-		  main_window, "main_view_menuitem") );
-	gtk_widget_hide( lookup_widget(
-		  main_window, "structure_drawingarea") );
+    /* Hide main control buttons etc */
+    gtk_widget_hide_all( lookup_widget(
+          main_window, "main_hbox1") );
+    gtk_widget_hide_all( lookup_widget(
+          main_window, "main_hbox2") );
+    gtk_widget_hide_all( lookup_widget(
+          main_window, "main_view_menuitem") );
+    gtk_widget_hide( lookup_widget(
+          main_window, "structure_drawingarea") );
 
-	/* Close plot/rdpat windows */
-	if( rdpattern_window != NULL )
-	  gtk_widget_destroy( rdpattern_window );
-	if( freqplots_window != NULL )
-	  gtk_widget_destroy( freqplots_window );
+    /* Close plot/rdpat windows */
+    if( rdpattern_window != NULL )
+      gtk_widget_destroy( rdpattern_window );
+    if( freqplots_window != NULL )
+      gtk_widget_destroy( freqplots_window );
 
-	if( nec2_edit_window == NULL )
-	  Open_Nec2_Editor( NEC2_EDITOR_RELOAD );
-	else
-	  Nec2_Input_File_Treeview( NEC2_EDITOR_REVERT );
+    if( nec2_edit_window == NULL )
+      Open_Nec2_Editor( NEC2_EDITOR_RELOAD );
+    else
+      Nec2_Input_File_Treeview( NEC2_EDITOR_REVERT );
 
-	return( FALSE );
+    return( FALSE );
   }
 
   /* Ask child processes to read input file */
   if( FORKED )
   {
-	int idx;
-	size_t lenc, leni;
+    int idx;
+    size_t lenc, leni;
 
-	lenc = strlen( fork_commands[INFILE] );
-	leni = strlen( infile );
-	for( idx = 0; idx < num_child_procs; idx++ )
-	{
-	  Write_Pipe( idx, fork_commands[INFILE], (ssize_t)lenc, TRUE );
-	  Write_Pipe( idx, infile, (ssize_t)leni, TRUE );
-	}
+    lenc = strlen( fork_commands[INFILE] );
+    leni = strlen( infile );
+    for( idx = 0; idx < num_child_procs; idx++ )
+    {
+      Write_Pipe( idx, fork_commands[INFILE], (ssize_t)lenc, TRUE );
+      Write_Pipe( idx, infile, (ssize_t)leni, TRUE );
+    }
   } /* if( FORKED ) */
 
   /* Allow redraws on expose events etc */
@@ -348,40 +348,40 @@ Open_Input_File( gpointer udata )
   /* Set projection at 45 deg rotation and
    * inclination if NEC2 editor window is not open */
   if( nec2_edit_window == NULL )
-	New_Viewer_Angle( 45.0, 45.0, rotate_structure,
-		incline_structure, &structure_proj_params );
+    New_Viewer_Angle( 45.0, 45.0, rotate_structure,
+        incline_structure, &structure_proj_params );
   New_Structure_Projection_Angle();
 
   /* Show current frequency */
   gtk_spin_button_set_value(
-	  mainwin_frequency, (gdouble)calc_data.fmhz );
+      mainwin_frequency, (gdouble)calc_data.fmhz );
 
   /* Show main control buttons etc */
   gtk_widget_show_all( lookup_widget(
-		main_window, "main_hbox1") );
+        main_window, "main_hbox1") );
   gtk_widget_show_all( lookup_widget(
-		main_window, "main_hbox2") );
+        main_window, "main_hbox2") );
   gtk_widget_show_all( lookup_widget(
-		main_window, "main_hbox3") );
+        main_window, "main_hbox3") );
   gtk_widget_show_all( lookup_widget(
-		main_window, "main_view_menuitem") );
+        main_window, "main_view_menuitem") );
   gtk_widget_show( lookup_widget(
-		main_window, "structure_drawingarea") );
+        main_window, "structure_drawingarea") );
 
   /* If currents or charges draw button is active
    * re-initialize structure currents/charges drawing */
   if( isFlagSet(DRAW_CURRENTS) )
-	Main_Currents_Togglebutton_Toggled( TRUE );
+    Main_Currents_Togglebutton_Toggled( TRUE );
   if( isFlagSet(DRAW_CHARGES) )
-	Main_Charges_Togglebutton_Toggled( TRUE );
+    Main_Charges_Togglebutton_Toggled( TRUE );
 
   /* Set input file to NEC2 editor. It will only
    * happen if the NEC2 editor window is open */
   new = *(gboolean *)udata;
   if( new )
-	Nec2_Input_File_Treeview( NEC2_EDITOR_REVERT );
+    Nec2_Input_File_Treeview( NEC2_EDITOR_REVERT );
   else
-	Nec2_Input_File_Treeview( NEC2_EDITOR_RELOAD );
+    Nec2_Input_File_Treeview( NEC2_EDITOR_RELOAD );
 
   /* Display sructure */
   Draw_Structure( structure_drawingarea );
@@ -389,25 +389,25 @@ Open_Input_File( gpointer udata )
   /* Re-initialize Rad Pattern drawing if window open */
   if( rdpattern_window != NULL )
   {
-	Main_Rdpattern_Activate( FALSE );
-	crnt.valid = FALSE;
+    Main_Rdpattern_Activate( FALSE );
+    crnt.valid = FALSE;
 
-	if( isFlagSet(DRAW_GAIN) )
-	  Rdpattern_Gain_Togglebutton_Toggled( TRUE );
-	else
-	  Rdpattern_Gain_Togglebutton_Toggled( FALSE );
+    if( isFlagSet(DRAW_GAIN) )
+      Rdpattern_Gain_Togglebutton_Toggled( TRUE );
+    else
+      Rdpattern_Gain_Togglebutton_Toggled( FALSE );
 
-	if( isFlagSet(DRAW_EHFIELD) )
-	  Rdpattern_EH_Togglebutton_Toggled( TRUE );
-	else
-	  Rdpattern_EH_Togglebutton_Toggled( FALSE );
+    if( isFlagSet(DRAW_EHFIELD) )
+      Rdpattern_EH_Togglebutton_Toggled( TRUE );
+    else
+      Rdpattern_EH_Togglebutton_Toggled( FALSE );
   }
 
   /* Re-initiate plots if window open */
   if( freqplots_window != NULL )
   {
-	Main_Freqplots_Activate();
-	Start_Frequency_Loop();
+    Main_Freqplots_Activate();
+    Start_Frequency_Loop();
   }
 
   return( FALSE );
@@ -419,61 +419,61 @@ static void sig_handler( int signal )
 {
   switch( signal )
   {
-	case SIGINT:
-	  fprintf( stderr, _("xnec2c: exiting via user interrupt\n") );
-	  break;
+    case SIGINT:
+      fprintf( stderr, _("xnec2c: exiting via user interrupt\n") );
+      break;
 
-	case SIGSEGV:
-	  fprintf( stderr, _("xnec2c: segmentation fault, exiting\n") );
-	  break;
+    case SIGSEGV:
+      fprintf( stderr, _("xnec2c: segmentation fault, exiting\n") );
+      break;
 
-	case SIGFPE:
-	  fprintf( stderr, _("xnec2c: floating point exception, exiting\n") );
-	  break;
+    case SIGFPE:
+      fprintf( stderr, _("xnec2c: floating point exception, exiting\n") );
+      break;
 
-	case SIGABRT:
-	  fprintf( stderr, _("xnec2c: abort signal received, exiting\n") );
-	  break;
+    case SIGABRT:
+      fprintf( stderr, _("xnec2c: abort signal received, exiting\n") );
+      break;
 
-	case SIGTERM:
-	  fprintf( stderr, _("xnec2c: termination request received, exiting\n") );
-	  break;
+    case SIGTERM:
+      fprintf( stderr, _("xnec2c: termination request received, exiting\n") );
+      break;
 
-	case SIGCHLD:
-	  {
-		int idx;
-		pid_t pid = getpid();
+    case SIGCHLD:
+      {
+        int idx;
+        pid_t pid = getpid();
 
-		if( !FORKED )
-		{
-		  fprintf( stderr,
-			  _("xnec2c: not forked, ignoring SIGCHLD from pid %d\n"), pid );
-		  return;
-		}
-		else
-		{
-		  for( idx = 0; idx < calc_data.num_jobs; idx++ )
-			if( forked_proc_data[idx]->child_pid == pid )
-			{
-			  fprintf( stderr, _("xnec2c: child process pid %d exited\n"), pid );
-			  if( isFlagSet(MAIN_QUIT) ) return;
-			  else break;
-			}
-		  return;
-		}
-	  }
+        if( !FORKED )
+        {
+          fprintf( stderr,
+              _("xnec2c: not forked, ignoring SIGCHLD from pid %d\n"), pid );
+          return;
+        }
+        else
+        {
+          for( idx = 0; idx < calc_data.num_jobs; idx++ )
+            if( forked_proc_data[idx]->child_pid == pid )
+            {
+              fprintf( stderr, _("xnec2c: child process pid %d exited\n"), pid );
+              if( isFlagSet(MAIN_QUIT) ) return;
+              else break;
+            }
+          return;
+        }
+      }
 
-	default:
-	  fprintf( stderr, _("xnec2c: default exit with signal: %d\n"), signal );
+    default:
+      fprintf( stderr, _("xnec2c: default exit with signal: %d\n"), signal );
   } /* switch( signal ) */
 
   /* Kill child processes */
   if( FORKED && !CHILD )
-	while( num_child_procs )
-	{
-	  num_child_procs--;
-	  kill( forked_proc_data[num_child_procs]->child_pid, SIGKILL );
-	}
+    while( num_child_procs )
+    {
+      num_child_procs--;
+      kill( forked_proc_data[num_child_procs]->child_pid, SIGKILL );
+    }
 
   Close_File( &input_fp );
 

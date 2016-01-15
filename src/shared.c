@@ -8,30 +8,30 @@
 
 /* Editor windows */
 GtkWidget
-  *wire_editor		= NULL,	/* Wire designer window  */
-  *arc_editor		= NULL,	/* Arc designer window   */
-  *helix_editor		= NULL, /* Helix designer window */
-  *patch_editor		= NULL,	/* Patch designer window */
-  *reflect_editor	= NULL,	/* Reflect design window */
-  *scale_editor		= NULL,	/* Scale designer window */
-  *cylinder_editor	= NULL,	/* Cylinder designer window  */
-  *transform_editor	= NULL, /* Transform designer window */
-  *gend_editor		= NULL;	/* Geom End designer window  */
+  *wire_editor      = NULL, /* Wire designer window  */
+  *arc_editor       = NULL, /* Arc designer window   */
+  *helix_editor     = NULL, /* Helix designer window */
+  *patch_editor     = NULL, /* Patch designer window */
+  *reflect_editor   = NULL, /* Reflect design window */
+  *scale_editor     = NULL, /* Scale designer window */
+  *cylinder_editor  = NULL, /* Cylinder designer window  */
+  *transform_editor = NULL, /* Transform designer window */
+  *gend_editor      = NULL; /* Geom End designer window  */
 
 /* Command windows */
 GtkWidget
   *excitation_command= NULL, /* Ecitation command editor */
   *frequency_command = NULL, /* Frequency command editor */
-  *ground_command	 = NULL, /* Ground command editor (GN) */
-  *ground2_command	 = NULL, /* Ground command editor (GD) */
-  *loading_command	 = NULL, /* Loading command editor 	*/
-  *network_command	 = NULL, /* Network command editor	*/
-  *txline_command	 = NULL, /* Tran Line command editor */
+  *ground_command    = NULL, /* Ground command editor (GN) */
+  *ground2_command   = NULL, /* Ground command editor (GD) */
+  *loading_command   = NULL, /* Loading command editor  */
+  *network_command   = NULL, /* Network command editor  */
+  *txline_command    = NULL, /* Tran Line command editor */
   *radiation_command = NULL, /* Rad Pattern command editor */
   *nearfield_command = NULL, /* Near Fields command editor */
-  *kernel_command	 = NULL, /* Thin-wire Kernel command editor  */
-  *intrange_command	 = NULL, /* Interaction Range command editor */
-  *execute_command	 = NULL; /* Execute (EX card) command editor */
+  *kernel_command    = NULL, /* Thin-wire Kernel command editor  */
+  *intrange_command  = NULL, /* Interaction Range command editor */
+  *execute_command   = NULL; /* Execute (EX card) command editor */
 
 /* Frequency step entry */
 GtkEntry *rdpattern_fstep_entry = NULL;
@@ -63,7 +63,7 @@ GtkTreeView
 
 /* Main, frequency plots and radation pattern windows */
 GtkWidget
-  *main_window		= NULL,
+  *main_window      = NULL,
   *freqplots_window = NULL,
   *rdpattern_window = NULL,
   *nec2_edit_window = NULL;
@@ -77,7 +77,7 @@ GtkWidget *rdpattern_drawingarea = NULL;
 gulong rdpattern_motion_handler;
 
 /* Dialog widgets */
-GtkWidget *quit_dialog	  = NULL;
+GtkWidget *quit_dialog    = NULL;
 GtkWidget *animate_dialog = NULL;
 
 /* Frequency step entry widget */

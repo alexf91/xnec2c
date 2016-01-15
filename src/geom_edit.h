@@ -16,8 +16,8 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef	GEOM_EDIT_H
-#define	GEOM_EDIT_H		1
+#ifndef GEOM_EDIT_H
+#define GEOM_EDIT_H     1
 
 #include "common.h"
 #include "interface.h"

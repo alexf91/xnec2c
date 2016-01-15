@@ -17,7 +17,7 @@
  */
 
 #ifndef CALLBACK_FUNC_H
-#define CALLBACK_FUNC_H		1
+#define CALLBACK_FUNC_H     1
 
 #include <ctype.h>
 #include "callbacks.h"

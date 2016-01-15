@@ -33,11 +33,11 @@
 void usage(void)
 {
   fprintf( stderr,
-	  _("Usage: xnec2c <input-file-name>\n"\
-		"              [-i <input-file-name>]\n"\
-		"              [-j <number of processors in SMP machine>]\n"\
-		"              [-h: print this usage information and exit]\n"\
-		"              [-v: print xnec2c version number and exit]\n") );
+      _("Usage: xnec2c <input-file-name>\n"\
+        "              [-i <input-file-name>]\n"\
+        "              [-j <number of processors in SMP machine>]\n"\
+        "              [-h: print this usage information and exit]\n"\
+        "              [-v: print xnec2c version number and exit]\n") );
 
 } /* end of usage() */
 
@@ -50,15 +50,15 @@ stop( char *mesg, int err )
   /* For child processes */
   if( CHILD )
   {
-	fprintf( stderr, "%s\n", mesg );
-	if( err )
-	{
-	  fprintf( stderr,
-		  _("xnec2c: fatal: child process %d exiting\n"),
-		  num_child_procs );
-	  _exit(-1);
-	}
-	else return( err );
+    fprintf( stderr, "%s\n", mesg );
+    if( err )
+    {
+      fprintf( stderr,
+          _("xnec2c: fatal: child process %d exiting\n"),
+          num_child_procs );
+      _exit(-1);
+    }
+    else return( err );
 
   } /* if( CHILD ) */
 
@@ -66,12 +66,12 @@ stop( char *mesg, int err )
   Stop_Frequency_Loop();
   error_dialog = create_error_dialog();
   gtk_label_set_text( GTK_LABEL(
-		lookup_widget(error_dialog, "error_label")), mesg );
+        lookup_widget(error_dialog, "error_label")), mesg );
 
   /* Hide ok button according to error */
   if( err == TRUE )
-	gtk_widget_hide( lookup_widget(
-		  error_dialog, "error_okbutton") );
+    gtk_widget_hide( lookup_widget(
+          error_dialog, "error_okbutton") );
   gtk_widget_show( error_dialog );
 
   /* Loop over usleep till user decides what to do */
@@ -79,11 +79,11 @@ stop( char *mesg, int err )
   SetFlag( ERROR_CONDX );
   while( isFlagSet(ERROR_CONDX) )
   {
-	if( isFlagSet(MAIN_QUIT) ) exit(-1);
+    if( isFlagSet(MAIN_QUIT) ) exit(-1);
 
-	/* Wait for GTK to complete its tasks */
-	while( g_main_context_iteration(NULL, FALSE) );
-	usleep(100000);
+    /* Wait for GTK to complete its tasks */
+    while( g_main_context_iteration(NULL, FALSE) );
+    usleep(100000);
   }
 
   return( err );
@@ -96,26 +96,26 @@ Nec2_Save_Warn( const gchar *mesg )
 {
   if( isFlagSet(FREQ_LOOP_RUNNING) )
   {
-	error_dialog = create_error_dialog();
-	gtk_label_set_text( GTK_LABEL(
-		  lookup_widget(error_dialog, "error_label")), mesg );
-	gtk_widget_hide( lookup_widget(
-		  error_dialog, "error_stopbutton") );
-	gtk_widget_show( error_dialog );
+    error_dialog = create_error_dialog();
+    gtk_label_set_text( GTK_LABEL(
+          lookup_widget(error_dialog, "error_label")), mesg );
+    gtk_widget_hide( lookup_widget(
+          error_dialog, "error_stopbutton") );
+    gtk_widget_show( error_dialog );
 
-	/* Loop over usleep till user decides what to do */
-	/* Could not think of another way to do this :-( */
-	SetFlag( ERROR_CONDX );
-	while( isFlagSet(ERROR_CONDX) )
-	{
-	  if( isFlagSet(MAIN_QUIT) ) exit(-1);
+    /* Loop over usleep till user decides what to do */
+    /* Could not think of another way to do this :-( */
+    SetFlag( ERROR_CONDX );
+    while( isFlagSet(ERROR_CONDX) )
+    {
+      if( isFlagSet(MAIN_QUIT) ) exit(-1);
 
-	  /* Wait for GTK to complete its tasks */
-	  while( g_main_context_iteration(NULL, FALSE) );
-	  usleep(100000);
-	}
+      /* Wait for GTK to complete its tasks */
+      while( g_main_context_iteration(NULL, FALSE) );
+      usleep(100000);
+    }
 
-	return( FALSE );
+    return( FALSE );
   }
 
   return( TRUE );
@@ -133,9 +133,9 @@ Nec2_Save_Warn( const gchar *mesg )
 int Load_Line( char *buff, FILE *pfile )
 {
   int
-	num_chr, /* number of characters read, excluding lf/cr */
-	eof,	 /* EOF flag */
-	chr;     /* character read by getc */
+    num_chr, /* number of characters read, excluding lf/cr */
+    eof,     /* EOF flag */
+    chr;     /* character read by getc */
 
   num_chr = 0;
   eof     = 0;
@@ -145,49 +145,49 @@ int Load_Line( char *buff, FILE *pfile )
 
   /* ignore commented lines, white spaces and eol/cr */
   if( (chr = fgetc(pfile)) == EOF )
-	return( EOF );
+    return( EOF );
 
   while(
-	  (chr == '#')	||
-	  (chr == '\'') ||
-	  (chr == CR )  ||
-	  (chr == LF ) )
+      (chr == '#')  ||
+      (chr == '\'') ||
+      (chr == CR )  ||
+      (chr == LF ) )
   {
-	/* go to the end of line (look for lf or cr) */
-	while( (chr != CR) && (chr != LF) )
-	  if( (chr = fgetc(pfile)) == EOF )
-		return( EOF );
+    /* go to the end of line (look for lf or cr) */
+    while( (chr != CR) && (chr != LF) )
+      if( (chr = fgetc(pfile)) == EOF )
+        return( EOF );
 
-	/* dump any cr/lf remaining */
-	while( (chr == CR) || (chr == LF) )
-	  if( (chr = fgetc(pfile)) == EOF )
-		return( EOF );
+    /* dump any cr/lf remaining */
+    while( (chr == CR) || (chr == LF) )
+      if( (chr = fgetc(pfile)) == EOF )
+        return( EOF );
 
   } /* end of while( (chr == '#') || ... */
 
   while( num_chr < LINE_LEN )
   {
-	/* if lf/cr reached before filling buffer, return */
-	if( (chr == CR) || (chr == LF) )
-	  break;
+    /* if lf/cr reached before filling buffer, return */
+    if( (chr == CR) || (chr == LF) )
+      break;
 
-	/* enter new char to buffer */
-	buff[num_chr++] = (char)chr;
+    /* enter new char to buffer */
+    buff[num_chr++] = (char)chr;
 
-	/* terminate buffer as a string on EOF */
-	if( (chr = fgetc(pfile)) == EOF )
-	{
-	  buff[num_chr] = '\0';
-	  eof = EOF;
-	}
+    /* terminate buffer as a string on EOF */
+    if( (chr = fgetc(pfile)) == EOF )
+    {
+      buff[num_chr] = '\0';
+      eof = EOF;
+    }
 
   } /* end of while( num_chr < max_chr ) */
 
   /* Capitalize first two characters (mnemonics) */
   if( (buff[0] > 0x60) && (buff[0] < 0x79) )
-	buff[0] = (char)toupper( (int)buff[1] );
+    buff[0] = (char)toupper( (int)buff[1] );
   if( (buff[1] > 0x60) && (buff[1] < 0x79) )
-	buff[1] = (char)toupper( (int)buff[1] );
+    buff[1] = (char)toupper( (int)buff[1] );
 
   /* terminate buffer as a string */
   buff[num_chr] = '\0';
@@ -208,10 +208,10 @@ void mem_alloc( void **ptr, size_t req, gchar *str )
   cnt += req;
   if( *ptr == NULL )
   {
-	snprintf( mesg, sizeof(mesg),
-		_("Memory allocation denied %s\n"), str );
-	fprintf( stderr, "%s: Total memory request %ld\n", mesg, cnt );
-	stop( mesg, ERR_STOP );
+    snprintf( mesg, sizeof(mesg),
+        _("Memory allocation denied %s\n"), str );
+    fprintf( stderr, "%s: Total memory request %ld\n", mesg, cnt );
+    stop( mesg, ERR_STOP );
   }
 
 } /* End of mem_alloc() */
@@ -226,10 +226,10 @@ void mem_realloc( void **ptr, size_t req, gchar *str )
   cnt += req;
   if( *ptr == NULL )
   {
-	snprintf( mesg, sizeof(mesg),
-		_("Memory re-allocation denied %s\n"), str );
-	fprintf( stderr, "%s: Total memory request %ld\n", mesg, cnt );
-	stop( mesg, ERR_STOP );
+    snprintf( mesg, sizeof(mesg),
+        _("Memory re-allocation denied %s\n"), str );
+    fprintf( stderr, "%s: Total memory request %ld\n", mesg, cnt );
+    stop( mesg, ERR_STOP );
   }
 
 } /* End of mem_realloc() */
@@ -239,7 +239,7 @@ void mem_realloc( void **ptr, size_t req, gchar *str )
 void free_ptr( void **ptr )
 {
   if( *ptr != NULL )
-	free( *ptr );
+    free( *ptr );
   *ptr = NULL;
 
 } /* End of free_ptr() */
@@ -260,11 +260,11 @@ Open_File( FILE **fp, char *fname, const char *mode )
   Close_File( fp );
   if( (*fp = fopen(fname, mode)) == NULL )
   {
-	char mesg[MESG_SIZE];
-	snprintf( mesg, sizeof(mesg),
-		_("xnec2c: %s: Failed to open file\n"), fname );
-	stop( mesg, ERR_STOP );
-	return( FALSE );
+    char mesg[MESG_SIZE];
+    snprintf( mesg, sizeof(mesg),
+        _("xnec2c: %s: Failed to open file\n"), fname );
+    stop( mesg, ERR_STOP );
+    return( FALSE );
   }
 
   return(TRUE);
@@ -280,7 +280,7 @@ Open_File( FILE **fp, char *fname, const char *mode )
 Close_File( FILE **fp )
 {
   if( *fp != NULL )
-	fclose( *fp );
+    fclose( *fp );
   *fp = NULL;
 
 } /* Close_File() */
@@ -368,10 +368,10 @@ Strlcpy( char *dest, const char *src, size_t n )
   /* Copy till terminating null of src or to n-1 */
   while( (ch != '\0') && (n > 0) )
   {
-	dest[idx] = src[idx];
-	idx++;
-	ch = src[idx];
-	n--;
+    dest[idx] = src[idx];
+    idx++;
+    ch = src[idx];
+    n--;
   }
 
   /* Terminate dest string */
@@ -399,9 +399,9 @@ Strlcat( char *dest, const char *src, size_t n )
   /* Find terminating null of dest */
   while( (n > 0) && (ch != '\0') )
   {
-	idd++;
-	ch = dest[idd];
-	n--; /* Count remaining char's in dest */
+    idd++;
+    ch = dest[idd];
+    n--; /* Count remaining char's in dest */
   }
 
   /* Copy n-1 chars to leave room for terminating null */
@@ -409,11 +409,11 @@ Strlcat( char *dest, const char *src, size_t n )
   ch = src[ids];
   while( (n > 0) && (ch != '\0') )
   {
-	dest[idd] = src[ids];
-	ids++;
-	ch = src[ids];
-	idd++;
-	n--;
+    dest[idd] = src[ids];
+    ids++;
+    ch = src[ids];
+    idd++;
+    n--;
   }
 
   /* Terminate dest string */
@@ -440,18 +440,18 @@ double Strtod( char *nptr, char **endptr )
   /* Find locale-dependent decimal point character */
   if( first_call )
   {
-	struct lconv *lcnv;
-	lcnv = localeconv();
-	dp = *lcnv->decimal_point;
-	first_call = FALSE;
+    struct lconv *lcnv;
+    lcnv = localeconv();
+    dp = *lcnv->decimal_point;
+    first_call = FALSE;
   }
 
   /* Look for a . or , decimal point character
    * in the supplied number buffer (string) */
   len = strlen( nptr );
   for( idx = 0; idx < (int)len; idx++ )
-	if( (nptr[idx] == ',') || (nptr[idx] == '.') )
-	  break;
+    if( (nptr[idx] == ',') || (nptr[idx] == '.') )
+      break;
 
   /* If a decimal point character is found, replace */
   if( idx < (int)len ) nptr[idx] = dp;
