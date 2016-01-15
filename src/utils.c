@@ -463,3 +463,4 @@ double Strtod( char *nptr, char **endptr )
 } /* End of Strtod() */
 
 /*------------------------------------------------------------------*/
+/* vim: set ts=2 sw=2 tw=0 noet : */

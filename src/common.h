@@ -1305,3 +1305,4 @@ void Stop_Frequency_Loop(void);
 void Incident_Field_Loop(void);
 
 #endif
+/* vim: set ts=2 sw=2 tw=0 noet : */

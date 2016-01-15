@@ -666,3 +666,4 @@ Mem_Copy( char *buff, char *var, size_t cnt, gboolean wrt )
 
 /*------------------------------------------------------------------------*/
 
+/* vim: set ts=2 sw=2 tw=0 noet : */

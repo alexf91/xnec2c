@@ -67,3 +67,4 @@ void        glade_set_atk_action_description (AtkAction       *action,
                                               const gchar     *action_name,
                                               const gchar     *description);
 
+/* vim: set ts=2 sw=2 tw=0 noet : */

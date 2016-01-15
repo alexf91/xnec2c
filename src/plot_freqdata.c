@@ -1342,3 +1342,4 @@ Set_Frequency_On_Click( GdkEventButton *event )
 
 /*-----------------------------------------------------------------------*/
 
+/* vim: set ts=2 sw=2 tw=0 noet : */

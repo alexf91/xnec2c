@@ -40,3 +40,4 @@ enum P2CH_COMND
 #define HFIELD      0x08
 
 #endif
+/* vim: set ts=2 sw=2 tw=0 noet : */

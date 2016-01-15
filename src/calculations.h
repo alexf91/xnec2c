@@ -25,3 +25,4 @@
 #define CCJ     (0.0-I*0.01666666667)
 
 #endif
+/* vim: set ts=2 sw=2 tw=0 noet : */

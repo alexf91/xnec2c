@@ -693,3 +693,4 @@ gtk_tree_model_iter_previous(GtkTreeModel *tree_model, GtkTreeIter *iter)
 
 /*------------------------------------------------------------------------*/
 
+/* vim: set ts=2 sw=2 tw=0 noet : */

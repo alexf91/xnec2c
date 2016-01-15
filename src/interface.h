@@ -33,3 +33,4 @@ GtkWidget* create_txline_command (void);
 GtkWidget* create_ground2_command (void);
 GtkWidget* create_gend_editor (void);
 GtkWidget* create_aboutdialog (void);
+/* vim: set ts=2 sw=2 tw=0 noet : */

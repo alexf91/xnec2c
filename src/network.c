@@ -747,3 +747,4 @@ load( int *ldtyp, int *ldtag, int *ldtagf, int *ldtagt,
 
 /*-----------------------------------------------------------------------*/
 
+/* vim: set ts=2 sw=2 tw=0 noet : */

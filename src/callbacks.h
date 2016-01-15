@@ -1299,3 +1299,4 @@ on_freqplots_save_as_gnuplot_activate  (GtkMenuItem     *menuitem,
 void
 on_struct_save_as_gnuplot_activate     (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+/* vim: set ts=2 sw=2 tw=0 noet : */

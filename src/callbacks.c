@@ -3788,3 +3788,4 @@ on_rdpattern_drawingarea_scroll_event  (GtkWidget       *widget,
   return FALSE;
 }
 
+/* vim: set ts=2 sw=2 tw=0 noet : */

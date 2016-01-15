@@ -38,7 +38,6 @@ static void sig_handler(int signal);
 static pid_t child_pid = (pid_t)(-1);
 
 /*------------------------------------------------------------------------*/
-
   int
 main (int argc, char *argv[])
 {
@@ -502,4 +501,4 @@ isChild(void)
 }
 
 /*------------------------------------------------------------------------*/
-
+/* vim: set ts=2 sw=2 tw=0 noet : */

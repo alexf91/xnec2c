@@ -2803,3 +2803,4 @@ Set_Labels( GtkWidget *widget, gchar **labels, gchar **text, gint num )
 
 /*------------------------------------------------------------------------*/
 
+/* vim: set ts=2 sw=2 tw=0 noet : */

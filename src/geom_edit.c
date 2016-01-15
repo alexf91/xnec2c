@@ -2433,3 +2433,4 @@ Get_Wire_Conductivity( int tag, double *s, GtkListStore *store )
 
 /*------------------------------------------------------------------------*/
 
+/* vim: set ts=2 sw=2 tw=0 noet : */
